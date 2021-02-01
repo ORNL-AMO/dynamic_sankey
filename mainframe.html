@@ -1,5 +1,8 @@
+<html>
 <head>
 	<h1><center>Dynamic Sankey Tool</center></h1>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
 
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -9,18 +12,23 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 	<!-- Load plotly.js into the DOM -->
 	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+	<!-- Load color picker -->
+	<link rel="stylesheet" href="la_color_picker.css">
+	
+	
 </head>
 
 <body>
 	
 	<div class="container">
-		<form>
 			<div class="form-group">
 			<label for="title">Enter the Title of Your Sankey</label>
-			<input type="text" class="form-control" id="title" onchange="setTitle()">
+			<input type="text" class="form-control" id="title" onchange="newTitle()">
 			</div>
-		</form>
 	</div>
+
+	<h3>Pick The Background Color</h3>
+	<input type='color' class='inp' id='colorPicker' onchange = "chartColor()" style="width: 145px">
 
 	<h3>Add Sources and Destinations</h3>
 	
@@ -32,8 +40,8 @@
 						<tr id="makeInputs">
 							<td style="width:120px" class="text-center">
 								<h3 style="margin-top: 5px">Source and Destination Nodes</h3>
-								<div class="text-center" id="makeInputs">
-									<button class="btn btn-secondary btn-pop" onclick="addInput()" >Add source and destination</button>
+								<div class="text-center" >
+									<button class="btn btn-secondary btn-pop" onclick="addNode()" >Add source and destination</button>
 								</div>
 							</td>
 						</tr>
@@ -41,46 +49,6 @@
 				</table>
 			</div>.
 		</div>
-		
-		<!--
-		<div class="col-sm-2">
-			<div style="width: 120px;  display: inline-block;">
-				<table class="table table-bordered" style="margin: 0px;">
-					<tbody>
-						<tr id="inputs">
-							<td style="width:120px" class="text-center">
-								<h3 style="margin-top: 5px">Node</h3>
-								<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1">name</span>
-									<input type="text" class="form-control" aria-describedby="basic-addon1" onchange="updateDifference()" style="width: 145px">
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1">value</span>
-									<input type="text" class="form-control" aria-describedby="basic-addon1" onchange="updateDifference()" style="width: 145px">
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1">units</span>
-									<input type="text" class="form-control" aria-describedby="basic-addon1" onchange="updateDifference()" style="width: 150px">
-								</div>
-								<div class="form-group" style="width: 205px">
-									<select class="form-control" id="sel1">
-									  <option>Red</option>
-									  <option>Blue</option>
-									  <option>Yellow</option>
-									  <option>Orange</option>
-									  <option>Green</option>
-									  <option>Blue</option>
-									  <option>Purple</option>
-									  <option>Brown</option>
-									</select>
-								  </div>	
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		-->
 	</div>
 	
 
@@ -102,56 +70,14 @@
 				</table>
 			</div>.
 		</div>
-		
-		<!--
-		<div class="col-sm-2">
-			<div style="width: 120px;  display: inline-block;">
-				<table class="table table-bordered" style="margin: 0px;">
-					<tbody>
-						<tr id="inputs">
-							<td style="width:120px" class="text-center">
-								<h3 style="margin-top: 5px">Link</h3>
-								<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1">source#</span>
-									<input type="text" class="form-control" aria-describedby="basic-addon1" onchange="updateDifference()" style="width: 175px">
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1">destination#</span>
-									<input type="text" class="form-control" aria-describedby="basic-addon1" onchange="updateDifference()" style="width: 150px">
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1">value</span>
-									<input type="text" class="form-control" aria-describedby="basic-addon1" onchange="updateDifference()" style="width: 185px">
-								</div>
-								<div class="input-group">
-									<span class="input-group-addon" id="basic-addon1">units</span>
-									<input type="text" class="form-control" aria-describedby="basic-addon1" onchange="updateDifference()" style="width: 190px">
-								</div>
-								<div class="form-group" style="width: 245px">
-									<select class="form-control" id="sel1">
-									  <option>Red</option>
-									  <option>Blue</option>
-									  <option>Yellow</option>
-									  <option>Orange</option>
-									  <option>Green</option>
-									  <option>Blue</option>
-									  <option>Purple</option>
-									  <option>Brown</option>
-									</select>
-								  </div>	
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>.
-		</div>
-		-->
 	</div>
 	
 	<div class="container">
-		<center><button type="button" class="btn btn-info" onclick="makeSankey()">Make Sankey</button></center>
+		<center><button type="button" class="btn btn-info" onclick="renderSankey()">Render Sankey</button></center>
 	</div>
 	<!--<script> makeSankey(); </script> -->
-	<div id='myDiv' style="width:90%;height:500px;"></div>
+	<div id='myDiv' style="width:100%;height:500px;"></div>
 	<script src='sankey.js'></script>
+	<script src="la_color_picker.js"></script>
 </body>
+</html>
