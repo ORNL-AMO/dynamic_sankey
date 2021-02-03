@@ -41,7 +41,7 @@ function newSource(numL)
 function newDest(numL)
 {
 	dest[numL]=document.getElementById("dest"+String(numL)).value;
-}	
+}
 
 function newLinkVal(numL)
 {

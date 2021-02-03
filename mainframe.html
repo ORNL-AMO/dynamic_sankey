@@ -26,7 +26,7 @@
 			<input type="text" class="form-control" id="title" onchange="newTitle()">
 			</div>
 	</div>
-
+	<div class="container2">
 	<h3>Pick The Background Color</h3>
 	<input type='color' class='inp' id='colorPicker' onchange = "chartColor()" style="width: 145px">
 
@@ -51,9 +51,10 @@
 		</div>
 	</div>
 	
+<h3>Define your Source to Destination Flow</h3>
 
 	<div class="row">
-		<h3>--Define your Source to Destination Flow</h3>
+
 		<div class="col-lg-8">
 			<div style="width: 120px;  display: inline-block;">
 				<table class="table table-bordered" style="margin: 0px;">
@@ -71,8 +72,8 @@
 			</div>.
 		</div>
 	</div>
-	
-	<div class="container">
+	</div>
+	<div class="container3">
 		<center><button type="button" class="btn btn-info" onclick="renderSankey()">Render Sankey</button></center>
 	</div>
 	
@@ -82,5 +83,6 @@
 	<div id='myDiv' style="width:100%;height:500px;"></div>
 	<script src='sankey.js'></script>
 	<script src="la_color_picker.js"></script>
+	
 </body>
 </html>
