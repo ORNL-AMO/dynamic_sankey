@@ -270,11 +270,13 @@ function addGradientElement()
 	const links = document.querySelectorAll('.sankey-link');
 	for (let i = 0; i < links.length; i++) 
 	{
-		(!numSource.includes(String(dest[i+1])))
+		if(!numSource.includes(String(dest[i+1])))
 		{
-			console.log(dest[i+1]);
-
 			links[i].setAttribute('style', `fill: ${"url(#psatLinkGradient)"};`);
+		}
+		else
+		{
+			links[i].setAttribute('style', `fill: ${startColorGradient};`);
 		}
 	}
   }
