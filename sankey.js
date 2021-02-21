@@ -2,7 +2,10 @@
  var color = "white";
  var numNode =1;
  var numLink =1;
- var myLabel = [];
+ var nodeLabel = [];
+ var nodeName = [];
+ var nodeValue =[];
+ var nodeUnits = [];
  var numSource = [];
  var dest = [];
  var linkVal= [];
@@ -41,7 +44,26 @@ function endColor()
 
 function newLabel(numN)
 {
-	myLabel[numN]=document.getElementById("label"+String(numN)).value;
+	nodeLabel[numN]=nodeName[numN]+" "+
+	nodeValue[numN]+nodeUnits[numN];
+}
+
+function newNodeName(numN)
+{
+	nodeName[numN]=document.getElementById("nodeName"+String(numN)).value;
+	newLabel(numN);
+}
+
+function newNodeValue(numN)
+{
+	nodeValue[numN]=document.getElementById("nodeValue"+String(numN)).value;
+	newLabel(numN);
+}
+
+function newNodeUnit(numN)
+{
+	nodeUnits[numN]=document.getElementById("nodeUnits"+String(numN)).value;
+	newLabel(numN);
 }
 
 function newNodeColor(numN)
@@ -81,12 +103,30 @@ function newLinkColor(numL)
 
 function newSource(numL)
 {
-	numSource[numL]=document.getElementById("source"+String(numL)).value;
+	if(!isNaN(document.getElementById("source"+String(numL)).value))
+	{
+		console.log("true source");
+		numSource[numL]=document.getElementById("source"+String(numL)).value;
+	}
+	else
+	{
+		console.log("false source");
+		numSource[numL]=nodeName.indexOf(document.getElementById("source"+String(numL)).value);
+	}
 }
 
 function newDest(numL)
 {
-	dest[numL]=document.getElementById("dest"+String(numL)).value;
+	if(!isNaN(document.getElementById("dest"+String(numL)).value))
+	{
+		console.log("true dest");
+		dest[numL]=document.getElementById("dest"+String(numL)).value;
+	}
+	else
+	{
+		console.log("false dest");
+		dest[numL]=nodeName.indexOf(document.getElementById("dest"+String(numL)).value);
+	}
 }
 
 function newLinkVal(numL)
@@ -100,14 +140,17 @@ function deleteLink(numL)
 	numSource[numL]=null;
 	dest[numL]=null;
 	linkVal[numL]=null;
-	linkColor[numLink]=null;
+	linkColor[numL]=null;
 }
 
 function deleteINode(numN)
 {
 	document.getElementById("Node"+numN).parentNode.removeChild(document.getElementById("Node"+numN));
-	myLabel[numN]= null;
-	nodeColor[numLink]=null;
+	nodeLabel [numN] = null;
+	nodeName[numN] = null;
+	nodeValue[numN] = null;
+	nodeUnits[numN] = null;
+	nodeColor[numL]=null;
 }
 
 function addNode()
@@ -126,15 +169,15 @@ function addNode()
 								"<h3 style='margin-top: 5px'>Node "+numNode+"</h3>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Name</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newLabel("+numNode+")' style='width: 178px' id='label"+String(numNode)+"'>"+
+									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeName("+numNode+")' style='width: 178px' id='nodeName"+String(numNode)+"'>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon' id='basic-addon1'>Value</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='updateDifference()' style='width: 178px'>"+
+									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeValue("+numNode+")' style='width: 178px' id='nodeValue"+String(numNode)+"'>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon' id='basic-addon1'>Units</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='updateDifference()' style='width: 178px'>"+
+									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeUnit("+numNode+")' style='width: 178px' id='nodeUnits"+String(numNode)+"'>"+
 								"</div>"+
 									"<input type='color' class='inp' id='nodeColor"+numNode+"' onchange = 'newNodeColor("+numNode+")' value='#1E00FF' style='width: 178px'>"+
 							"</td>"+
@@ -229,10 +272,16 @@ function buildSvgArrows()
     const arrowOpacity = '0.9';
     const arrowShape = 'polygon(100% 50%, 0 0, 0 100%)'
 	var endNodeColor;
-
+	
+	var k =1;
 	for (let i = 0; i < rects.length; i++) 
 	{
-	  if (!numSource.includes(String(i+1))) 
+	  while(nodeColor[i+k] == null)
+	  {
+		k++;
+	  }
+
+	  if (!numSource.includes(String(i+k))) 
 	  {
 		if(hasColorGradient)
 		{
@@ -240,7 +289,7 @@ function buildSvgArrows()
 		}
 		else
 		{
-			endNodeColor = nodeColor[i+1];
+			endNodeColor = nodeColor[i+k];
 		}
         const height = rects[i].getAttribute('height');
 		//const defaultY = rects[i].getAttribute('y');
@@ -267,10 +316,15 @@ function addGradientElement()
     // Insert our gradient Def
 	mainSVG.appendChild(svgDefs);
 	
-	const links = document.querySelectorAll('.sankey-link');
+	var k = 1;
+	const links = document.querySelectorAll('.sankey-link');	
 	for (let i = 0; i < links.length; i++) 
 	{
-		if(!numSource.includes(String(dest[i+1])))
+		while(dest[i+k]==null)
+		{
+			k++;
+		}
+		if(!numSource.includes(String(dest[i+k])))
 		{
 			links[i].setAttribute('style', `fill: ${"url(#psatLinkGradient)"};`);
 		}
@@ -281,6 +335,10 @@ function addGradientElement()
 	}
   }
 
+function numericCheck()
+{
+
+}
 
 function renderSankey()
 {
@@ -290,7 +348,7 @@ function renderSankey()
     type: "sankey",
         //arrangement: "snap",
         node:{
-			label: myLabel,
+			label: nodeLabel,
 			color: tempNodeColor,
            // x: [0.2, 0.2, 0.5, 0.7, 0.3, 0.5],
            // y: [0.7, 0.5, 0.2, 0.4, 0.2, 0.3],
@@ -313,5 +371,12 @@ function renderSankey()
 		buildSvgArrows();
 
 	if(hasColorGradient)
+	{		
 		addGradientElement();
+
+		var myPlot = document.getElementById('myDiv');
+		myPlot.on('plotly_afterplot', function(){
+			addGradientElement();
+		});
+	}
 }
