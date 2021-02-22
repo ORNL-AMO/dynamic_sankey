@@ -26,7 +26,15 @@
 			<input type="text" class="form-control" id="title" onchange="newTitle()">
 			</div>
 	</div>
-
+	<div class="container3">
+	<button type="button" class="collapsible">Help button</button>
+	
+<div class="content">
+  <p>Hello user! In order to use our super amazing Dynamic Sankey webpage, you will have to click on the two buttons that say source and destination nodes or source and destination flow.</p>
+</div>
+</div> 
+	
+	<div class="container2">
 	<h3>Background Color</h3>
 	<input type='color' class='inp' id='colorPicker' onchange = "chartColor()" value='#FFFFFF' style="width: 145px">
 
@@ -59,13 +67,13 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>.
+			</div>
 		</div>
 	</div>
 	
-
+<h3>Define your Source to Destination Flow</h3>
 	<div class="row">
-		<h3>--Define your Source to Destination Flow</h3>
+		
 		<div class="col-lg-8">
 			<div style="width: 120px;  display: inline-block;">
 				<table class="table table-bordered" style="margin: 0px;">
@@ -80,10 +88,10 @@
 						</tr>
 					</tbody>
 				</table>
-			</div>.
+			</div>
 		</div>
 	</div>
-	
+	</div>
 	<div class="container">
 		<center><button type="button" class="btn btn-info" onclick="renderSankey()">Render Sankey</button></center>
 	</div>
@@ -93,5 +101,22 @@
 	<!--<script> makeSankey(); </script> -->
 	<div id='myDiv' style="width:100%;height:500px;"></div>
 	<script src='sankey.js'></script>
+	
+		<script>
+		var coll = document.getElementsByClassName("collapsible");
+		var i;
+		
+		for (i = 0; i < coll.length; i++) {
+		  coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+			  content.style.display = "none";
+			} else {
+			  content.style.display = "block";
+			}
+		  });
+		}
+		</script>
 </body>
 </html>

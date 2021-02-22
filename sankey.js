@@ -1,4 +1,4 @@
- var mytitle;
+var mytitle;
  var color = "white";
  var numNode =1;
  var numLink =1;
