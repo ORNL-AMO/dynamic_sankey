@@ -111,7 +111,8 @@ function newSource(numL)
 	else
 	{
 		console.log("false source");
-		numSource[numL]=nodeName.indexOf(document.getElementById("source"+String(numL)).value);
+		numSource[numL]=String(nodeName.indexOf(document.getElementById("source"+String(numL)).value));
+		console.log(numSource[numL]);
 	}
 }
 
@@ -125,7 +126,8 @@ function newDest(numL)
 	else
 	{
 		console.log("false dest");
-		dest[numL]=nodeName.indexOf(document.getElementById("dest"+String(numL)).value);
+		dest[numL]=String(nodeName.indexOf(document.getElementById("dest"+String(numL)).value));
+		console.log(dest[numL]);
 	}
 }
 
@@ -337,7 +339,41 @@ function addGradientElement()
 
 function numericCheck()
 {
+	let checkSourceValue = [];
+	let checkDestValue = [];
+	let alertMessage = "Warning!\n\n";
+	let numericC = false;
 
+	for (let i = 1; i < nodeValue.length; i++)
+	{
+		checkSourceValue[i]= parseFloat(0);
+		checkDestValue[i]= parseFloat(0);
+	}
+
+	for (let i = 1; i < linkVal.length; i++)
+	{
+		checkSourceValue[numSource[i]]= checkSourceValue[numSource[i]]+parseFloat(linkVal[i]);
+		checkDestValue[dest[i]]= checkDestValue[dest[i]]+parseFloat(linkVal[i]);
+	}
+
+	for (let i = 1; i < nodeValue.length; i++)
+	{
+		if(!(nodeValue[i]==checkSourceValue[i])&&numSource.includes(String(i)))
+		{
+			alertMessage=alertMessage.concat(nodeName[i]+" has a value of "+nodeValue[i]+nodeUnits[i]+", but has "+ checkSourceValue[i]+nodeUnits[i]+" flowing from it.\n");
+			numericC = true;
+		}
+		if(!(nodeValue[i]==checkDestValue[i])&&dest.includes(String(i)))
+		{
+			alertMessage=alertMessage.concat(nodeName[i]+" has a value of "+nodeValue[i]+nodeUnits[i]+", but has " + checkDestValue[i]+nodeUnits[i]+" flowing to it.\n");
+			numericC = true;
+		}
+	}
+
+	if(numericC)
+	{
+		alert(alertMessage);
+	}
 }
 
 function renderSankey()
@@ -379,4 +415,5 @@ function renderSankey()
 			addGradientElement();
 		});
 	}
+	numericCheck();
 }
