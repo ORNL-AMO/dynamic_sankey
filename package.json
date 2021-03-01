@@ -1,0 +1,19 @@
+{
+  "name": "Dynamic-Sankey-App",
+  "version": "0.1.0",
+  "author": "your name",
+  "description": "Dynamic Sankey App",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "convert-units": "^2.3.4"
+  },
+  "devDependencies": {
+    "electron": "^11.3.0",
+    "electron-rebuild": "^2.3.5"
+  },
+  "keywords": [],
+  "license": "ISC"
+}

@@ -1,9 +1,6 @@
 <html>
 <head>
-	
-
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 	<!-- Optional theme -->
@@ -21,18 +18,16 @@
 <body>
 <br>
 	<div class="container3">
-	
-		<button onclick="window.location.href='help.html'" type="button" class="btn btn-primary"> Help Button</button></a>
-
+		<button onclick="window.open('help.html')" type="button" class="btn btn-primary">Help Button</button>
 	</div> 
+
 	<h1><center>Dynamic Sankey Tool</center></h1>
 	<div class="container">
-			<div class="form-group">
+		<div class="form-group">
 			<label for="title">Enter the Title of Your Sankey</label>
 			<input type="text" class="form-control" id="title" onchange="newTitle()">
-			</div>
+		</div>
 	</div>
-
 	
 	<div class="container2">
 	<h3>Background Color</h3>
@@ -50,6 +45,14 @@
 		<button type="button" class="btn btn-primary" onclick="addColorGradient()">Color Gradient</button><br>
 	</div>
 
+	<h3>Measures</h3>
+	<select class="input-group" name="measures" id="measures">
+	</select>
+
+	<h3>primary Units</h3>
+	<select class="input-group" name="unitOptions" id="unitOptions" onchange = "newPrimaryUnit()">
+	</select>
+	  
 	<h3>Add Sources and Destinations</h3> 
 	
 	<div class="row">
@@ -92,6 +95,7 @@
 		</div>
 	</div>
 	</div>
+	<br>
 	<div class="container">
 		<center><button type="button" class="btn btn-info" onclick="renderSankey()">Render Sankey</button></center>
 	</div>
@@ -101,22 +105,5 @@
 	<!--<script> makeSankey(); </script> -->
 	<div id='myDiv' style="width:100%;height:500px;"></div>
 	<script src='sankey.js'></script>
-	
-		<script>
-		var coll = document.getElementsByClassName("collapsible");
-		var i;
-		
-		for (i = 0; i < coll.length; i++) {
-		  coll[i].addEventListener("click", function() {
-			this.classList.toggle("active");
-			var content = this.nextElementSibling;
-			if (content.style.display === "block") {
-			  content.style.display = "none";
-			} else {
-			  content.style.display = "block";
-			}
-		  });
-		}
-		</script>
 </body>
 </html>

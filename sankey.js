@@ -1,4 +1,6 @@
-var mytitle;
+const convert = require('convert-units');
+ var mytitle;
+ var primaryUnit ='mm';
  var color = "white";
  var numNode =1;
  var numLink =1;
@@ -6,9 +8,12 @@ var mytitle;
  var nodeName = [];
  var nodeValue =[];
  var nodeUnits = [];
+ var conNodeValue =[];
  var numSource = [];
  var dest = [];
  var linkVal= [];
+ var linkUnits = [];
+ var conLinkValue =[];
  var nodeColor = [];
  var tempNodeColor =[];
  var linkColor = [];
@@ -16,10 +21,46 @@ var mytitle;
  var hasColorGradient =false;
  var startColorGradient = '#1E00FF';
  var endColorGradient ='#FF0000';
+ 
+ var select = document.getElementById("measures"); 
+ var options = convert().measures();
+ 
+ for(var i = 0; i < options.length; i++) {
+	 var opt = options[i];
+	 var el = document.createElement("option");
+	 el.textContent = opt;
+	 el.value = opt;
+	 select.appendChild(el);
+ }
+
+select = document.getElementById("unitOptions"); 
+options = convert().possibilities();
+ 
+ for(var i = 0; i < options.length; i++) {
+	 var opt = options[i];
+	 var el = document.createElement("option");
+	 el.textContent = opt;
+	 el.value = opt;
+	 select.appendChild(el);
+ }
 
  function newTitle()
 {
 	mytitle = document.getElementById("title").value;
+}
+
+function newPrimaryUnit()
+{
+	primaryUnit = document.getElementById("unitOptions").value;
+
+	for(let i = 1; i < conNodeValue.length; i++)
+		{
+			convertNodeUnits(i);
+		}
+		for(let i = 1; i < conLinkValue.length; i++)
+		{
+			convertLinkUnits(i);
+		}
 }
 
 function hasArrows(hasArrows)
@@ -58,12 +99,32 @@ function newNodeValue(numN)
 {
 	nodeValue[numN]=document.getElementById("nodeValue"+String(numN)).value;
 	newLabel(numN);
+	convertNodeUnits(numN);
 }
 
 function newNodeUnit(numN)
 {
 	nodeUnits[numN]=document.getElementById("nodeUnits"+String(numN)).value;
 	newLabel(numN);
+	convertNodeUnits(numN);
+}
+
+function newLinkUnit(numL)
+{
+	linkUnits[numL]=document.getElementById("linkUnits"+String(numL)).value;
+	convertLinkUnits(numL);
+}
+
+function convertNodeUnits(numN)
+{
+	conNodeValue[numN] = convert(nodeValue[numN]).from(nodeUnits[numN]).to(primaryUnit);
+	document.getElementById('convertedNodeUnits'+String(numN)).value = conNodeValue[numN] +" "+ primaryUnit;
+}
+
+function convertLinkUnits(numL)
+{
+	conLinkValue[numL] = convert(linkVal[numL]).from(linkUnits[numL]).to(primaryUnit);
+	document.getElementById('convertedLinkUnits'+String(numL)).value = conLinkValue[numL] +" "+ primaryUnit;
 }
 
 function newNodeColor(numN)
@@ -134,6 +195,7 @@ function newDest(numL)
 function newLinkVal(numL)
 {
 	linkVal[numL]=document.getElementById("linkVal"+String(numL)).value;
+	convertLinkUnits(numL);
 }
 
 function deleteLink(numL)
@@ -179,7 +241,11 @@ function addNode()
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon' id='basic-addon1'>Units</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeUnit("+numNode+")' style='width: 178px' id='nodeUnits"+String(numNode)+"'>"+
+									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeUnit("+numNode+")' style='width: 178px' id='nodeUnits"+String(numNode)+"'></select>"+
+								"</div>"+
+								"<div class='input-group'>"+
+									"<span class='input-group-addon' id='basic-addon1'>converted Units</span>"+
+									"<input type='text' class='form-control' aria-describedby='basic-addon1' style='width: 178px' id='convertedNodeUnits"+String(numNode)+ "' readonly='true'>"+
 								"</div>"+
 									"<input type='color' class='inp' id='nodeColor"+numNode+"' onchange = 'newNodeColor("+numNode+")' value='#1E00FF' style='width: 178px'>"+
 							"</td>"+
@@ -188,9 +254,22 @@ function addNode()
 				"</table>"+
 			"</div>"+
 		"</div>";
-		
+	
 	makeInputs.appendChild(newNode);
 	nodeColor[numNode] = '#1E00FF';
+	
+	var unitSelect = document.getElementById("nodeUnits"+String(numNode)); 
+	var unitOptions = convert().possibilities();
+	nodeUnits[numNode]=unitOptions[0];
+	for(var i = 0; i < unitOptions.length; i++)
+	{
+		var opt = unitOptions[i];
+		var el = document.createElement("option");
+		el.textContent = opt;
+		el.value = opt;
+		unitSelect.appendChild(el);
+	}
+
     numNode++;
 }
 
@@ -222,7 +301,11 @@ function addLink()
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon' id='basic-addon1'>Units</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='updateDifference()' style='width: 238px'>"+
+									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newLinkUnit("+numLink+")' style='width: 238px' id='linkUnits"+String(numLink)+"'></select>"+
+								"</div>"+
+								"<div class='input-group'>"+
+									"<span class='input-group-addon' id='basic-addon1'>converted Units</span>"+
+									"<input type='text' class='form-control' aria-describedby='basic-addon1' style='width: 238px' id='convertedLinkUnits"+String(numLink)+ "' readonly='true'>"+
 								"</div>"+
 								"<input type='color' class='inp' id='linkColor"+numLink+"' onchange = 'newLinkColor("+numLink+")' value='#EFECEC' style='width: 238px'>"+
 							"</td>"+
@@ -235,6 +318,19 @@ function addLink()
 	
 	makeLinks.appendChild(newLink);
 	linkColor[numLink] = '#EFECEC';
+
+	var linkSelect = document.getElementById("linkUnits"+String(numLink)); 
+	var linkUnitOptions = convert().possibilities();
+	linkUnits[numLink]=linkUnitOptions[0];
+	for(var i = 0; i < linkUnitOptions.length; i++)
+	{
+		var opt = linkUnitOptions[i];
+		var el = document.createElement("option");
+		el.textContent = opt;
+		el.value = opt;
+		linkSelect.appendChild(el);
+	}
+
     numLink++;
 }
 
