@@ -1,100 +1,165 @@
 const convert = require('convert-units');
  var mytitle;
- var primaryUnit ='mm';
+ var measures = 'length';
+ var primaryUnit;
  var color = "white";
+
+ //used to make the indexs of the sankey arrays
  var numNode =1;
  var numLink =1;
+
+ //parrel node arrays to pass to render function
  var nodeLabel = [];
  var nodeName = [];
  var nodeValue =[];
  var nodeUnits = [];
  var conNodeValue =[];
+ var nodeColor = [];
+ var tempNodeColor =[];
+
+ //parrel link arrays to pass to render function
  var numSource = [];
  var dest = [];
  var linkVal= [];
  var linkUnits = [];
  var conLinkValue =[];
- var nodeColor = [];
- var tempNodeColor =[];
  var linkColor = [];
+
+ //sankey options set to default
  var arrows = false;
  var hasColorGradient =false;
  var startColorGradient = '#1E00FF';
  var endColorGradient ='#FF0000';
  
- var select = document.getElementById("measures"); 
- var options = convert().measures();
+ // loads lists on startup
+ displayMeasures();
+ diplaymainUnitList();
  
- for(var i = 0; i < options.length; i++) {
-	 var opt = options[i];
-	 var el = document.createElement("option");
-	 el.textContent = opt;
-	 el.value = opt;
-	 select.appendChild(el);
+ // dropdown list of measurments
+ function displayMeasures()
+ {
+	var select = document.getElementById("measures"); 
+	var options = convert().measures();
+	
+	for(var i = 0; i < options.length; i++) {
+		var opt = options[i];
+		var el = document.createElement("option");
+		el.textContent = opt;
+		el.value = opt;
+		select.appendChild(el);
+	}
+
+ }
+ 
+ //dropdown list for the primary units
+ function diplaymainUnitList()
+ {
+	var op = document.getElementById("unitOptions");
+	var length = op.options.length;
+	for (i = length-1; i >= 0; i--)
+	{
+		op.options[i] = null;
+	}
+
+	var select = document.getElementById("unitOptions"); 
+	var options = convert().possibilities(measures);
+	primaryUnit = options[0];
+	for(var i = 0; i < options.length; i++) {
+		var opt = options[i];
+		var el = document.createElement("option");
+		el.textContent = opt;
+		el.value = opt;
+		select.appendChild(el);
+	}
  }
 
-select = document.getElementById("unitOptions"); 
-options = convert().possibilities();
- 
- for(var i = 0; i < options.length; i++) {
-	 var opt = options[i];
-	 var el = document.createElement("option");
-	 el.textContent = opt;
-	 el.value = opt;
-	 select.appendChild(el);
- }
-
+// takes in user input for the title of chart
  function newTitle()
 {
 	mytitle = document.getElementById("title").value;
 }
 
+// takes in measures from the user and changes all unit lists
+function newmeasures()
+{
+	measures =document.getElementById("measures").value;
+	diplaymainUnitList();
+
+	for(let i = 1; i < numNode; i++)
+	{
+		if(nodeColor[i]!=null)
+		{
+			nodeUnitList(i);
+			convertNodeUnits(i);
+			newLabel(i);
+		}
+	}
+	for(let i = 1; i < numLink; i++)
+	{
+		if(linkColor[i]!=null)
+		{
+			linkUnitList(i);
+			convertLinkUnits(i);
+		}
+	}
+}
+
+//takes in user input for primary units and then reconverts all conversions
 function newPrimaryUnit()
 {
 	primaryUnit = document.getElementById("unitOptions").value;
 
 	for(let i = 1; i < conNodeValue.length; i++)
-		{
+	{
+		if(conNodeValue[i]!=null)
 			convertNodeUnits(i);
-		}
-		for(let i = 1; i < conLinkValue.length; i++)
-		{
+	}
+	for(let i = 1; i < conLinkValue.length; i++)
+	{
+		if(conLinkValue[i]!=null)
 			convertLinkUnits(i);
-		}
+	}
 }
 
+//takes in user option for arrows or nodes
 function hasArrows(hasArrows)
 {
 	arrows = hasArrows;
 }
 
+//sets the background color to user input
 function chartColor()
 {
 	color = document.getElementById("colorPicker").value;
 }
 
+// sets the starting color of the Color Gradient to user input
 function startColor()
 {
 	startColorGradient = document.getElementById("startColor").value;
 }
 
+// sets the ending color of the Color Gradient to user input
 function endColor()
 {
 	endColorGradient = document.getElementById("endColor").value;
 }
 
+//makes the label for the nodes
 function newLabel(numN)
 {
 	nodeLabel[numN]=nodeName[numN]+" "+
 	nodeValue[numN]+nodeUnits[numN];
 }
 
+// sets the node name to user input and remakes node label
 function newNodeName(numN)
 {
 	nodeName[numN]=document.getElementById("nodeName"+String(numN)).value;
 	newLabel(numN);
 }
 
+// takes in user input of the node value, remakes node label and coverts the value
 function newNodeValue(numN)
 {
 	nodeValue[numN]=document.getElementById("nodeValue"+String(numN)).value;
@@ -102,6 +167,7 @@ function newNodeValue(numN)
 	convertNodeUnits(numN);
 }
 
+// takes in user input of the node unit, remakes node label and coverts the node value
 function newNodeUnit(numN)
 {
 	nodeUnits[numN]=document.getElementById("nodeUnits"+String(numN)).value;
@@ -109,29 +175,34 @@ function newNodeUnit(numN)
 	convertNodeUnits(numN);
 }
 
+// takes in user input of the link unit and coverts the link value
 function newLinkUnit(numL)
 {
 	linkUnits[numL]=document.getElementById("linkUnits"+String(numL)).value;
 	convertLinkUnits(numL);
 }
 
+// coverts the node value to the primary units
 function convertNodeUnits(numN)
 {
-	conNodeValue[numN] = convert(nodeValue[numN]).from(nodeUnits[numN]).to(primaryUnit);
+	conNodeValue[numN] = String(convert(nodeValue[numN]).from(nodeUnits[numN]).to(primaryUnit));
 	document.getElementById('convertedNodeUnits'+String(numN)).value = conNodeValue[numN] +" "+ primaryUnit;
 }
 
+// coverts the link value to the primary units
 function convertLinkUnits(numL)
 {
-	conLinkValue[numL] = convert(linkVal[numL]).from(linkUnits[numL]).to(primaryUnit);
+	conLinkValue[numL] = String(convert(linkVal[numL]).from(linkUnits[numL]).to(primaryUnit));
 	document.getElementById('convertedLinkUnits'+String(numL)).value = conLinkValue[numL] +" "+ primaryUnit;
 }
 
+//sets the node color to user input
 function newNodeColor(numN)
 {
 	nodeColor[numN]=document.getElementById("nodeColor"+String(numN)).value;
 }
 
+// changes the node colors if the color gradent option is selected
 function ChangeGradientNodeColor()
 {
 	if(hasColorGradient)
@@ -157,11 +228,13 @@ function ChangeGradientNodeColor()
 	}
 }
 
+//sets the link color to user input
 function newLinkColor(numL)
 {
 	linkColor[numL]=document.getElementById("linkColor"+String(numL)).value;
 }
 
+//takes in the source node from user input(can be the node number or its name)
 function newSource(numL)
 {
 	if(!isNaN(document.getElementById("source"+String(numL)).value))
@@ -177,6 +250,7 @@ function newSource(numL)
 	}
 }
 
+//takes in the destination node from user input(can be the node number or its name)
 function newDest(numL)
 {
 	if(!isNaN(document.getElementById("dest"+String(numL)).value))
@@ -192,12 +266,14 @@ function newDest(numL)
 	}
 }
 
+// takes in user input of the link value and coverts the value
 function newLinkVal(numL)
 {
 	linkVal[numL]=document.getElementById("linkVal"+String(numL)).value;
 	convertLinkUnits(numL);
 }
 
+//deletes the node UI from the page and clears the elements of the parallel link arrays
 function deleteLink(numL)
 {
 	document.getElementById("Link"+numL).parentNode.removeChild(document.getElementById("Link"+numL));
@@ -205,8 +281,10 @@ function deleteLink(numL)
 	dest[numL]=null;
 	linkVal[numL]=null;
 	linkColor[numL]=null;
+	conLinkValue[numL]=null;
 }
 
+//deletes the link UI from the page and clears the elements of the parallel link arrays
 function deleteINode(numN)
 {
 	document.getElementById("Node"+numN).parentNode.removeChild(document.getElementById("Node"+numN));
@@ -214,9 +292,11 @@ function deleteINode(numN)
 	nodeName[numN] = null;
 	nodeValue[numN] = null;
 	nodeUnits[numN] = null;
-	nodeColor[numL]=null;
+	nodeColor[numN]=null;
+	conNodeValue[numN]=null;
 }
 
+//adds the node UI to the page and sets color and unit default values
 function addNode()
 {
     var makeInputs = document.getElementById("makeInputs");
@@ -257,10 +337,23 @@ function addNode()
 	
 	makeInputs.appendChild(newNode);
 	nodeColor[numNode] = '#1E00FF';
-	
-	var unitSelect = document.getElementById("nodeUnits"+String(numNode)); 
-	var unitOptions = convert().possibilities();
-	nodeUnits[numNode]=unitOptions[0];
+	nodeUnitList(numNode);
+    numNode++;
+}
+
+//diplays unit list for each node
+function nodeUnitList(numN)
+{
+	var op = document.getElementById("nodeUnits"+String(numN));
+	var length = op.options.length;
+	for (i = length-1; i >= 0; i--)
+	{
+		op.options[i] = null;
+	}
+
+	var unitSelect = document.getElementById("nodeUnits"+String(numN)); 
+	var unitOptions = convert().possibilities(measures);
+	nodeUnits[numN]=unitOptions[0];
 	for(var i = 0; i < unitOptions.length; i++)
 	{
 		var opt = unitOptions[i];
@@ -269,10 +362,9 @@ function addNode()
 		el.value = opt;
 		unitSelect.appendChild(el);
 	}
-
-    numNode++;
 }
 
+//adds the link UI to the page and sets color and unit default values
 function addLink()
 {
     var makeLinks = document.getElementById("makeLinks");
@@ -318,10 +410,23 @@ function addLink()
 	
 	makeLinks.appendChild(newLink);
 	linkColor[numLink] = '#EFECEC';
+	linkUnitList(numLink);
+    numLink++;
+}
 
-	var linkSelect = document.getElementById("linkUnits"+String(numLink)); 
-	var linkUnitOptions = convert().possibilities();
-	linkUnits[numLink]=linkUnitOptions[0];
+//diplays unit list for each link
+function linkUnitList(numL)
+{
+	var op = document.getElementById("linkUnits"+String(numL));
+	var length = op.options.length;
+	for (i = length-1; i >= 0; i--)
+	{
+		op.options[i] = null;
+	}
+
+	var linkSelect = document.getElementById("linkUnits"+String(numL)); 
+	var linkUnitOptions = convert().possibilities(measures);
+	linkUnits[numL]=linkUnitOptions[0];
 	for(var i = 0; i < linkUnitOptions.length; i++)
 	{
 		var opt = linkUnitOptions[i];
@@ -330,10 +435,9 @@ function addLink()
 		el.value = opt;
 		linkSelect.appendChild(el);
 	}
-
-    numLink++;
 }
 
+//makes the UI for the gradent color options to the page and set hasColorGradient to true
 function addColorGradient()
 {
 	if(!hasColorGradient)
@@ -353,6 +457,7 @@ function addColorGradient()
 
 }
 
+//removes the UI for the gradent color options from the page and set hasColorGradient to false
 function removeColorGradient()
 {
 	if(hasColorGradient)
@@ -364,6 +469,7 @@ function removeColorGradient()
 	}
 }
 
+//changes the end nodes from rectangles to triangles
 function buildSvgArrows() 
 {
     const rects = document.querySelectorAll('.node-rect');
@@ -400,6 +506,7 @@ function buildSvgArrows()
 	}
 }
 
+//adds color gradent to the end links
 function addGradientElement()
 {
     const mainSVG = document.querySelector('.main-svg')
@@ -433,6 +540,8 @@ function addGradientElement()
 	}
   }
 
+// adds all the units coming to and from each node and compares it the the nodes value
+//alerts the user if the values are not equal
 function numericCheck()
 {
 	let checkSourceValue = [];
@@ -448,20 +557,20 @@ function numericCheck()
 
 	for (let i = 1; i < linkVal.length; i++)
 	{
-		checkSourceValue[numSource[i]]= checkSourceValue[numSource[i]]+parseFloat(linkVal[i]);
-		checkDestValue[dest[i]]= checkDestValue[dest[i]]+parseFloat(linkVal[i]);
+		checkSourceValue[numSource[i]]= checkSourceValue[numSource[i]]+parseFloat(conLinkValue[i]);
+		checkDestValue[dest[i]]= checkDestValue[dest[i]]+parseFloat(conLinkValue[i]);
 	}
 
-	for (let i = 1; i < nodeValue.length; i++)
+	for (let i = 1; i < conNodeValue.length; i++)
 	{
-		if(!(nodeValue[i]==checkSourceValue[i])&&numSource.includes(String(i)))
+		if(!(conNodeValue[i]==checkSourceValue[i])&&numSource.includes(String(i)))
 		{
-			alertMessage=alertMessage.concat(nodeName[i]+" has a value of "+nodeValue[i]+nodeUnits[i]+", but has "+ checkSourceValue[i]+nodeUnits[i]+" flowing from it.\n");
+			alertMessage=alertMessage.concat(nodeName[i]+" has a value of "+conNodeValue[i]+primaryUnit+", but has "+ checkSourceValue[i]+primaryUnit+" flowing from it.\n");
 			numericC = true;
 		}
-		if(!(nodeValue[i]==checkDestValue[i])&&dest.includes(String(i)))
+		if(!(conNodeValue[i]==checkDestValue[i])&&dest.includes(String(i)))
 		{
-			alertMessage=alertMessage.concat(nodeName[i]+" has a value of "+nodeValue[i]+nodeUnits[i]+", but has " + checkDestValue[i]+nodeUnits[i]+" flowing to it.\n");
+			alertMessage=alertMessage.concat(nodeName[i]+" has a value of "+conNodeValue[i]+primaryUnit+", but has " + checkDestValue[i]+primaryUnit+" flowing to it.\n");
 			numericC = true;
 		}
 	}
@@ -472,6 +581,7 @@ function numericCheck()
 	}
 }
 
+//takes all global varables and uses them to render the sankey
 function renderSankey()
 {
 	ChangeGradientNodeColor();
@@ -479,6 +589,7 @@ function renderSankey()
     var data = [{
     type: "sankey",
         //arrangement: "snap",
+		valuesuffix: primaryUnit,
         node:{
 			label: nodeLabel,
 			color: tempNodeColor,
@@ -488,7 +599,7 @@ function renderSankey()
         link: {
             source: numSource,
             target: dest,
-			value: linkVal,
+			value: conLinkValue,
 			color: linkColor}
         }]
 
