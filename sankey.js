@@ -30,6 +30,7 @@ const convert = require('convert-units');
  var hasColorGradient =false;
  var startColorGradient = '#1E00FF';
  var endColorGradient ='#FF0000';
+ var sankeyIsRendered = false;
  
  // loads lists on startup
  displayMeasures();
@@ -48,7 +49,6 @@ const convert = require('convert-units');
 		el.value = opt;
 		select.appendChild(el);
 	}
-
  }
  
  //dropdown list for the primary units
@@ -185,14 +185,16 @@ function newLinkUnit(numL)
 // coverts the node value to the primary units
 function convertNodeUnits(numN)
 {
-	conNodeValue[numN] = String(convert(nodeValue[numN]).from(nodeUnits[numN]).to(primaryUnit));
+	var temp = parseFloat(convert(nodeValue[numN]).from(nodeUnits[numN]).to(primaryUnit));
+	conNodeValue[numN] = temp.toFixed(2);
 	document.getElementById('convertedNodeUnits'+String(numN)).value = conNodeValue[numN] +" "+ primaryUnit;
 }
 
 // coverts the link value to the primary units
 function convertLinkUnits(numL)
 {
-	conLinkValue[numL] = String(convert(linkVal[numL]).from(linkUnits[numL]).to(primaryUnit));
+	var temp = parseFloat(convert(linkVal[numL]).from(linkUnits[numL]).to(primaryUnit));
+	conLinkValue[numL] = temp.toFixed(2);
 	document.getElementById('convertedLinkUnits'+String(numL)).value = conLinkValue[numL] +" "+ primaryUnit;
 }
 
@@ -540,6 +542,15 @@ function addGradientElement()
 	}
   }
 
+  //downloads the sankey
+function downloadSankey() 
+{
+	if(sankeyIsRendered)
+		saveSvgAsPng(document.querySelector("svg"), "Sankey.png");
+	else
+		alert("Sankey has not been rendered yet!");
+}
+
 // adds all the units coming to and from each node and compares it the the nodes value
 //alerts the user if the values are not equal
 function numericCheck()
@@ -577,13 +588,24 @@ function numericCheck()
 
 	if(numericC)
 	{
-		alert(alertMessage);
+		if (confirm(alertMessage))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
+	return true;
 }
 
 //takes all global varables and uses them to render the sankey
 function renderSankey()
 {
+	if(!numericCheck())
+		return;
+
 	ChangeGradientNodeColor();
 
     var data = [{
@@ -622,5 +644,5 @@ function renderSankey()
 			addGradientElement();
 		});
 	}
-	numericCheck();
+	sankeyIsRendered = true;
 }
