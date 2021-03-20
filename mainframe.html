@@ -27,70 +27,69 @@
 	</div>
 	
 	<div class="container2">
-	<h3>Background Color</h3>
-	<input type='color' class='inp' id='colorPicker' onchange = "chartColor()" value='#FFFFFF' style="width: 145px">
+		<h3>Background Color</h3>
+		<input type='color' class='inp' id='colorPicker' onchange = "chartColor()" value='#FFFFFF' style="width: 145px">
 
-	<h3>Type of Sankey</h3>
-	<div class="btn-group">
-		<button type="button" class="btn btn-primary" onclick="hasArrows(false)">nodes</button>
-		<button type="button" class="btn btn-primary" onclick="hasArrows(true)">arrows</button>
-	</div>
-
-	<h3>Color Gradient</h3>
-	<div class="btn-group" id="colorGradient">
-		<button type="button" class="btn btn-primary" onclick="removeColorGradient()">No Color Gradient</button>
-		<button type="button" class="btn btn-primary" onclick="addColorGradient()">Color Gradient</button><br>
-	</div>
-
-	<h3>Sankey Measurements</h3>
-	<select class="input-group" name="measures" id="measures" onchange = "newmeasures()">
-	</select>
-
-	<h3>primary Units</h3>
-	<select class="input-group" name="unitOptions" id="unitOptions" onchange = "newPrimaryUnit()">
-	</select>
-	  
-	<h3>Add Sources and Destinations</h3> 
-	
-	<div class="row">
-		<div class="col-lg-8">
-			<div style="width: 120px;  display: inline-block;">
-				<table class="table table-bordered" style="margin: 0px;">
-					<tbody>
-						<tr id="makeInputs">
-							<td style="width:120px" class="text-center">
-								<h3 style="margin-top: 5px">Source and Destination Nodes</h3>
-								<div class="text-center" >
-									<button class="btn btn-secondary btn-pop" onclick="addNode()" >Add source and destination</button>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		<h3>Type of Sankey</h3>
+		<div class="btn-group">
+			<button type="button" class="btn btn-primary" onclick="hasArrows(false)">nodes</button>
+			<button type="button" class="btn btn-primary" onclick="hasArrows(true)">arrows</button>
 		</div>
-	</div>
-	
-<h3>Define your Source to Destination Flow</h3>
-	<div class="row">
+
+		<h3>Color Gradient</h3>
+		<div class="btn-group" id="colorGradient">
+			<button type="button" class="btn btn-primary" onclick="removeColorGradient()">No Color Gradient</button>
+			<button type="button" class="btn btn-primary" onclick="addColorGradient()">Color Gradient</button><br>
+		</div>
+
+		<h3>Sankey Measurements</h3>
+		<select class="input-group" name="measures" id="measures" onchange = "newmeasures()">
+		</select>
+
+		<h3>primary Units</h3>
+		<select class="input-group" name="unitOptions" id="unitOptions" onchange = "newPrimaryUnit()">
+		</select>
 		
-		<div class="col-lg-8">
-			<div style="width: 120px;  display: inline-block;">
-				<table class="table table-bordered" style="margin: 0px;">
-					<tbody>
-						<tr id="makeLinks">
-							<td style="width:120px" class="text-center">
-								<h3 style="margin-top: 5px">Source and Destination flow</h3>
-								<div class="text-center">
-									<button class="btn btn-secondary btn-pop" onclick="addLink()" >Add Source and Destination Link</button>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+		<h3>Add Sources and Destinations</h3> 
+		<div style="width: 120px;  display: inline-block;">
+			<table class="table table-bordered" style="margin: 0px;">
+				<tbody>
+					<tr >
+						<td style="width:120px" class="text-center">
+							<h3 style="margin-top: 5px">Source and Destination Nodes</h3>
+							<div class="text-center" >
+								<button class="btn btn-secondary btn-pop" onclick="addNode()" >Add source or destination</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
-	</div>
+		<br><br>
+		<div class="row"id="makeInputs">
+			<!-- This is where Node UI will get added -->
+		</div>
+		
+		
+		<h3>Define your Source to Destination Flow</h3>
+		<div style="width: 120px;  display: inline-block;">
+			<table class="table table-bordered" style="margin: 0px;">
+				<tbody>
+					<tr>
+						<td style="width:120px" class="text-center">
+							<h3 style="margin-top: 5px">Source and Destination flow</h3>
+							<div class="text-center">
+								<button class="btn btn-secondary btn-pop" onclick="addLink()" >Add Source and Destination Link</button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<br><br>
+		<div class="row" id="makeLinks">
+			<!-- This is where link UI will get added -->
+		</div>
 	</div>
 	<br>
 	<div class="container">

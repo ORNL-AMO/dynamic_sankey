@@ -303,9 +303,9 @@ function addNode()
 {
     var makeInputs = document.getElementById("makeInputs");
 
-	var newNode = document.createElement("td");
+	var newNode = document.createElement("col-md-4");
 	newNode.setAttribute("id", "Node"+numNode);
-    newNode.innerHTML = "<div class='col-sm-2' id='node"+numNode+">"+
+    newNode.innerHTML = 
 			"<div style='width: 250px;  display: inline-block;'>"+
 				"<table class='table table-bordered' style='margin: 0px;'>"+
 					"<tbody>"+
@@ -315,27 +315,26 @@ function addNode()
 								"<h3 style='margin-top: 5px'>Node "+numNode+"</h3>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Name</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeName("+numNode+")' style='width: 178px' id='nodeName"+String(numNode)+"'>"+
+									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeName("+numNode+")' style='width: 200px' id='nodeName"+String(numNode)+"'>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon' id='basic-addon1'>Value</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeValue("+numNode+")' style='width: 178px' id='nodeValue"+String(numNode)+"'>"+
+									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeValue("+numNode+")' style='width: 200px' id='nodeValue"+String(numNode)+"'>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon' id='basic-addon1'>Units</span>"+
-									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeUnit("+numNode+")' style='width: 178px' id='nodeUnits"+String(numNode)+"'></select>"+
+									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeUnit("+numNode+")' style='width: 200px' id='nodeUnits"+String(numNode)+"'></select>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon' id='basic-addon1'>converted Units</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' style='width: 178px' id='convertedNodeUnits"+String(numNode)+ "' readonly='true'>"+
+									"<input type='text' class='form-control' aria-describedby='basic-addon1' style='width: 200px' id='convertedNodeUnits"+String(numNode)+ "' readonly='true'>"+
 								"</div>"+
-									"<input type='color' class='inp' id='nodeColor"+numNode+"' onchange = 'newNodeColor("+numNode+")' value='#1E00FF' style='width: 178px'>"+
+									"<input type='color' class='inp' id='nodeColor"+numNode+"' onchange = 'newNodeColor("+numNode+")' value='#1E00FF' style='width: 200px'>"+
 							"</td>"+
 						"</tr>"+
 					"</tbody>"+
 				"</table>"+
-			"</div>"+
-		"</div>";
+			"</div>";
 	
 	makeInputs.appendChild(newNode);
 	nodeColor[numNode] = '#1E00FF';
@@ -371,9 +370,9 @@ function addLink()
 {
     var makeLinks = document.getElementById("makeLinks");
 
-	var newLink = document.createElement("td");
+	var newLink = document.createElement("col-md-4");
 	newLink.setAttribute("id", "Link"+numLink);
-    newLink.innerHTML = "<div class='col-sm-2' id='link"+numLink+"'>"+
+    newLink.innerHTML =
 			"<div style='width: 285px;  display: inline-block;'>"+
 				"<table class='table table-bordered' style='margin: 0px;'>"+
 					"<tbody>"+
@@ -407,8 +406,7 @@ function addLink()
 					"</tbody>"+
 				"</table>"+
 			"</div>"+
-		"</div>"+
-	"</div>";
+		"</div>";
 	
 	makeLinks.appendChild(newLink);
 	linkColor[numLink] = '#EFECEC';
