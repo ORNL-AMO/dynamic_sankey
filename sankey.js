@@ -35,7 +35,8 @@ const convert = require('convert-units');
  // loads lists on startup
  displayMeasures();
  diplaymainUnitList();
- 
+ addLink();
+ addNode();
  // dropdown list of measurments
  function displayMeasures()
  {
@@ -278,6 +279,10 @@ function newLinkVal(numL)
 //deletes the node UI from the page and clears the elements of the parallel link arrays
 function deleteLink(numL)
 {
+	if (numL==1)
+	{
+		return;
+	}
 	document.getElementById("Link"+numL).parentNode.removeChild(document.getElementById("Link"+numL));
 	numSource[numL]=null;
 	dest[numL]=null;
@@ -289,6 +294,10 @@ function deleteLink(numL)
 //deletes the link UI from the page and clears the elements of the parallel link arrays
 function deleteINode(numN)
 {
+	if (numN==1)
+	{
+		return;
+	}
 	document.getElementById("Node"+numN).parentNode.removeChild(document.getElementById("Node"+numN));
 	nodeLabel [numN] = null;
 	nodeName[numN] = null;
@@ -302,7 +311,7 @@ function deleteINode(numN)
 function addNode()
 {
     var makeInputs = document.getElementById("makeInputs");
-
+	
 	var newNode = document.createElement("col-md-4");
 	newNode.setAttribute("id", "Node"+numNode);
     newNode.innerHTML = 
@@ -335,6 +344,9 @@ function addNode()
 					"</tbody>"+
 				"</table>"+
 			"</div>";
+	
+	
+	
 	
 	makeInputs.appendChild(newNode);
 	nodeColor[numNode] = '#1E00FF';
@@ -622,12 +634,14 @@ function renderSankey()
 			value: conLinkValue,
 			color: linkColor}
         }]
+		
 
+	
     var layout = {
 		"title": mytitle,
 		paper_bgcolor: color
 	}
-
+	
 	Plotly.newPlot('myDiv', data, layout)
 
 	if(arrows)
