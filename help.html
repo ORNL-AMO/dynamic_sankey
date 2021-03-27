@@ -1,68 +1,65 @@
 <html>
+
 <head>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-	<!-- Load plotly.js into the DOM -->
-	<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
-	<!-- Load color picker -->
-	<link rel="stylesheet" href="styles.css">		
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+    <!-- Load plotly.js into the DOM -->
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <!-- Load color picker -->
+    <link rel="stylesheet" href="styles.css">
 </head>
+<style>
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20em;
+        border-radius: 3%;
+    }
+</style>
 
 <div class="container">
-    <h1 style="color:white;"><center><b>Dynamic Sankey Help Page</b></p>
+    <h1 style="color:white; font-size: 50px;">
+        <center><b>Dynamic Sankey Help Page</b></p>
 </div>
 
 <div class="container3">
-		<button onclick="window.open('mainframe.html')" type="button" class="btn btn-primary">Return to Main</button>
-</div> 
+    <button onclick="window.open('mainframe.html')" type="button" class="btn btn-primary">Return to Sankey</button>
+</div>
 
 <body style="background-color:#333333;">
-	<div class="container2">
-    <h2 style="color:white;"> Step-by-step guide to navigating the Sankey Application</h2>
-    <h3 style="color:white;"> If you wish to access this section–The Help Section–there is a Help button<br>on the main page that will allow you to navigate here.</h3>
+    <div class="container2">
+        <h2 style="color:white; font-size: 40px; text-align: center; margin-bottom: 5em"> Step-by-step guide to navigating the Sankey Application</h2>
+        <h2>Start by giving your Sankey Diagram a title</h2>
 
-    <ol>
-        <li style="color:white;"><b>Start by giving your Sankey Diagram a name</b></li>
-		<br>
-        <img src="images/t.png">
-        <!-- insert a screenshot of the enter the title of your sankey -->
-		<br>
-		<br>
-        <li style="color:white;"><b>Next, you can choose a background to have on your Sankey Diagram</b></li>
-		<br>
-        <img src="images/bckgrndcolor.png">
-        <!-- insert a screenshot of the background color section here-->
-		<br>
-		<br>
-        <li style="color:white;"><b>Afterwards, you can choose what type of Sankey you prefer to have: Nodes or Arrows</b></li>
-		<br>
-        <img src="images/type.png">
-        <!-- insert a screenshot of the type of the Sankey section -->
-		<br>
-		<br>
-        <li style="color:white;"><b>Finally, you can choose whether you wish to have color gradient or not</b></li>
-		<br>
-        <img src="images/gradient.png">
-        <!--Insert a screenshot of the color gradient section-->
-		<br>
-		<br>
-        <li style="color:white;"><b>You can also make your graph more appealing by adding Measurements and/or Primary Units</b></li>
-    </ol>
+        <h2 style="color:white; font-size: 40px; text-align: center; margin-bottom: 5em"> 1. Start by giving your Sankey Diagram a name:</h2>
+        <img src="images/t.png" style="width:800px;height:300px">
 
+        <h2 style="color:white; font-size: 34; text-align: center; margin-bottom: 1em;"> 2. Next, you can choose a background to have on your Sankey Diagram</h2>
+        <img src="images/bckgrndcolor.png" style="width:500px;height:500px">
 
-    <h2 style="color:white;"> Add Sources and Destinations</h2>
-    <ol>
-        <li style="color:white;">In the Add Sources and Destination, click on the button and proceed to insert–<br>The name of your node, the value and the units, as well as the converted units.</li>
-		<br>
-        <img src="images/sourcebtn.png">
-        <img src="images/dest.png">
-    </ol>
+        <h2 style="color:white; font-size: 34; text-align: center; margin-bottom: 1em;"> 3. Afterwards, you can choose what type of Sankey you prefer to have: Nodes or Arrows</h2>
+        <img src="images/type.png" style="width:600px;height:300px">
+
+        <h2 style="color:white; font-size: 34; text-align: center; margin-bottom: 1em;"> 4.Finally, you can choose whether you wish to have color gradient or not</h2>
+        <img src="images/gradient.png" style="width:700px;height:200px">
+
+        <!--<h3 style="color:white; font-size: 30px; text-align: center"> If you wish to access this section–The Help Section–there is a Help button<br>on the main page that will allow you to navigate here.</h3> -->
+
+        <h2 style="color:white; font-size: 34; text-align: center; margin-bottom: 2em;"> 5.You can also make your graph more appealing by adding Measurements and/or Primary Units</h2>
+
+        <h2 style="color:white; font-size: 34; text-align: center; margin-bottom: 1em;"> Add Sources and Destinations</h2>
+
+        style="color:white; font-size: 34; text-align: center; margin-bottom: 1em;">In the Add Sources and Destination, click on the button and proceed to insert–<br>The name of your node, the value and the units, as well as the converted units.</li>
+
+        <img src="images/sourcebtn.png" style="width:500px;height:500px">
+        <img src="images/dest.png" style="width:500px;height:900px">
+
 </body>
-
 
 </html>

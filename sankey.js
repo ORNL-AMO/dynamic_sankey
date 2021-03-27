@@ -150,7 +150,7 @@ function endColor()
 function newLabel(numN)
 {
 	nodeLabel[numN]=nodeName[numN]+" "+
-	nodeValue[numN]+nodeUnits[numN];
+	nodeValue[numN]+" "+nodeUnits[numN];
 }
 
 // sets the node name to user input and remakes node label
@@ -242,14 +242,14 @@ function newSource(numL)
 {
 	if(!isNaN(document.getElementById("source"+String(numL)).value))
 	{
-		console.log("true source");
+		//console.log("true source");
 		numSource[numL]=document.getElementById("source"+String(numL)).value;
 	}
 	else
 	{
-		console.log("false source");
+		//console.log("false source");
 		numSource[numL]=String(nodeName.indexOf(document.getElementById("source"+String(numL)).value));
-		console.log(numSource[numL]);
+		//console.log(numSource[numL]);
 	}
 }
 
@@ -258,14 +258,14 @@ function newDest(numL)
 {
 	if(!isNaN(document.getElementById("dest"+String(numL)).value))
 	{
-		console.log("true dest");
+		//console.log("true dest");
 		dest[numL]=document.getElementById("dest"+String(numL)).value;
 	}
 	else
 	{
-		console.log("false dest");
+		//console.log("false dest");
 		dest[numL]=String(nodeName.indexOf(document.getElementById("dest"+String(numL)).value));
-		console.log(dest[numL]);
+		//console.log(dest[numL]);
 	}
 }
 
@@ -279,10 +279,6 @@ function newLinkVal(numL)
 //deletes the node UI from the page and clears the elements of the parallel link arrays
 function deleteLink(numL)
 {
-	if (numL==1)
-	{
-		return;
-	}
 	document.getElementById("Link"+numL).parentNode.removeChild(document.getElementById("Link"+numL));
 	numSource[numL]=null;
 	dest[numL]=null;
@@ -294,10 +290,6 @@ function deleteLink(numL)
 //deletes the link UI from the page and clears the elements of the parallel link arrays
 function deleteINode(numN)
 {
-	if (numN==1)
-	{
-		return;
-	}
 	document.getElementById("Node"+numN).parentNode.removeChild(document.getElementById("Node"+numN));
 	nodeLabel [numN] = null;
 	nodeName[numN] = null;
@@ -311,7 +303,11 @@ function deleteINode(numN)
 function addNode()
 {
     var makeInputs = document.getElementById("makeInputs");
-	
+
+	var xButton = "";
+	if(numNode==1)
+		xButton = "disabled";
+		
 	var newNode = document.createElement("col-md-4");
 	newNode.setAttribute("id", "Node"+numNode);
     newNode.innerHTML = 
@@ -320,7 +316,7 @@ function addNode()
 					"<tbody>"+
 						"<tr id='inputs'>"+
 							"<td style='width:120px' class='text-center'>"+
-								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteINode("+numNode+")' style='background-color: #8f3236'><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
+								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteINode("+numNode+")' style='background-color: #8f3236' "+xButton+"><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
 								"<h3 style='margin-top: 5px'>Node "+numNode+"</h3>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Name</span>"+
@@ -382,6 +378,10 @@ function addLink()
 {
     var makeLinks = document.getElementById("makeLinks");
 
+	var xButton = "";
+	if(numNode==1)
+		xButton = "disabled";
+
 	var newLink = document.createElement("col-md-4");
 	newLink.setAttribute("id", "Link"+numLink);
     newLink.innerHTML =
@@ -390,7 +390,7 @@ function addLink()
 					"<tbody>"+
 						"<tr id='inputs'>"+
 							"<td style='width:120px' class='text-center'>"+
-								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteLink("+numLink+")' style='background-color: #8f3236'><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
+								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteLink("+numLink+")' style='background-color: #8f3236' "+xButton+"><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
 								"<h3 style='margin-top: 5px'>Link "+numLink+"</h3>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Source #</span>"+
@@ -508,10 +508,7 @@ function buildSvgArrows()
 			endNodeColor = nodeColor[i+k];
 		}
         const height = rects[i].getAttribute('height');
-		//const defaultY = rects[i].getAttribute('y');
-		//const colorG = rects[i].getAttribute('fill');
-
-        //rects[i].setAttribute('y', `${defaultY}`);
+		
         rects[i].setAttribute('style', `width: ${height*.25}px; height: ${height}px; clip-path:  ${arrowShape}; 
          stroke-width: 0.5; stroke: rgb(255, 255, 255); stroke-opacity: 0.5; fill: ${endNodeColor}; fill-opacity: ${arrowOpacity};`);
       }
@@ -551,6 +548,18 @@ function addGradientElement()
 		}
 	}
   }
+
+  function visableNodeLabels() 
+{
+	const nodeSpot = document.getElementsByClassName('node-label');
+	for (let i = 0; i < nodeSpot.length; i++) 
+	{
+		nodeSpot[i].setAttribute('style', "cursor: default; fill: rgb(68, 68, 68);"+
+		 "text-shadow: rgb(255, 255, 255) -2px 2px 2px,rgb(255, 255, 255) 2px 2px 2px,"+
+		 "rgb(255, 255, 255) 2px -2px 2px, rgb(255, 255, 255) -2px -2px 2px; font-family:"+
+		"'Open Sans', verdana, arial, sans-serif; font-size: 15px; fill-opacity: 1;");
+	}
+}
 
   //downloads the sankey
 function downloadSankey() 
@@ -620,14 +629,12 @@ function renderSankey()
 
     var data = [{
     type: "sankey",
-        //arrangement: "snap",
+        arrangement: "freeform",
 		valuesuffix: primaryUnit,
         node:{
 			label: nodeLabel,
 			color: tempNodeColor,
-           // x: [0.2, 0.2, 0.5, 0.7, 0.3, 0.5],
-           // y: [0.7, 0.5, 0.2, 0.4, 0.2, 0.3],
-            pad:10}, // 10 Pixels
+            pad:45}, 
         link: {
             source: numSource,
             target: dest,
@@ -653,8 +660,18 @@ function renderSankey()
 
 		var myPlot = document.getElementById('myDiv');
 		myPlot.on('plotly_afterplot', function(){
+			visableNodeLabels();
 			addGradientElement();
 		});
 	}
+	else
+	{
+		var myPlot = document.getElementById('myDiv');
+		myPlot.on('plotly_afterplot', function(){
+			visableNodeLabels();
+		});
+	}
+	visableNodeLabels();
+	
 	sankeyIsRendered = true;
 }
