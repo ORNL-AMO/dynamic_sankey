@@ -21,7 +21,7 @@
 	<h1><center>Dynamic Sankey Tool</center></h1>
 	<div class="container">
 		<div class="form-group">
-			<label for="title">Enter the Title of Your Sankey</label>
+			<label for="title">Enter the Title Of Your Sankey</label>
 			<input type="text" class="form-control" id="title" onchange="newTitle()">
 		</div>
 	</div>
@@ -30,10 +30,10 @@
 		<h3>Background Color</h3>
 		<input type='color' class='inp' id='colorPicker' onchange = "chartColor()" value='#FFFFFF' style="width: 145px">
 
-		<h3>Type of Sankey</h3>
+		<h3>Type Of Sankey</h3>
 		<div class="btn-group">
-			<button type="button" class="btn btn-primary" onclick="hasArrows(false)">nodes</button>
-			<button type="button" class="btn btn-primary" onclick="hasArrows(true)">arrows</button>
+			<button type="button" class="btn btn-primary" onclick="hasArrows(false)">Nodes</button>
+			<button type="button" class="btn btn-primary" onclick="hasArrows(true)">Arrows</button>
 		</div>
 
 		<h3>Color Gradient</h3>
@@ -43,22 +43,43 @@
 		</div>
 
 		<h3>Sankey Measurements</h3>
-		<select class="input-group" name="measures" id="measures" onchange = "newmeasures()">
+		<select class="input-group" name="measures" id="measures" onchange = "newMeasures()">
+			<option value="energy">Energy</option>
+			<option value="power">Power</option>
+			<option value="voltage">Voltage</option>
+			<option value="current">Current</option>
+			<option value="reactivePower">Reactive Power</option>
+			<option value="apparentPower">Apparent Power</option>
+			<option value="reactiveEnergy">Reactive Energy</option>
+			<option value="temperature">Temperature</option>
+			<option value="pressure">Pressure</option>
+			<option value="volumeFlowRate">volume Flow Rate</option>
+			<option value="illuminance">Illuminance</option>
+			<option value="frequency">Frequency</option>
+			<option value="time">Time</option>
+			<option value="digital">Digital</option>
+			<option value="partsPer">Parts Per</option>
+			<option value="speed">Speed</option>
+			<option value="pace">Pace</option>
+			<option value="length">Length</option>
+			<option value="area">Area</option>
+			<option value="mass">Mass</option>
+			<option value="each">Each</option>
 		</select>
 
 		<h3>primary Units</h3>
 		<select class="input-group" name="unitOptions" id="unitOptions" onchange = "newPrimaryUnit()">
 		</select>
 		
-		<h3>Add Sources and Destinations</h3> 
+		<h3>Add Sources And Destinations</h3> 
 		<div style="width: 120px;  display: inline-block;">
 			<table class="table table-bordered" style="margin: 0px;">
 				<tbody>
 					<tr >
 						<td style="width:120px" class="text-center">
-							<h3 style="margin-top: 5px">Source and Destination Nodes</h3>
+							<h3 style="margin-top: 5px">Source And Destination Nodes</h3>
 							<div class="text-center" >
-								<button class="btn btn-secondary btn-pop" onclick="addNode()" >Add source or destination</button>
+								<button class="btn btn-secondary btn-pop" onclick="addNode()" >Add Source Or Destination</button>
 							</div>
 						</td>
 					</tr>
@@ -71,15 +92,15 @@
 		</div>
 		
 		
-		<h3>Define your Source to Destination Flow</h3>
+		<h3>Define Your Source To Destination Flow</h3>
 		<div style="width: 120px;  display: inline-block;">
 			<table class="table table-bordered" style="margin: 0px;">
 				<tbody>
 					<tr>
 						<td style="width:120px" class="text-center">
-							<h3 style="margin-top: 5px">Source and Destination flow</h3>
+							<h3 style="margin-top: 5px">Source And Destination Flow</h3>
 							<div class="text-center">
-								<button class="btn btn-secondary btn-pop" onclick="addLink()" >Add Source and Destination Link</button>
+								<button class="btn btn-secondary btn-pop" onclick="addLink()" >Add Source And Destination Link</button>
 							</div>
 						</td>
 					</tr>

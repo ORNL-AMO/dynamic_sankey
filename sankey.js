@@ -1,6 +1,6 @@
 const convert = require('convert-units');
  var mytitle;
- var measures = 'length';
+ var measures = 'energy';
  var primaryUnit;
  var color = "white";
 
@@ -33,24 +33,11 @@ const convert = require('convert-units');
  var sankeyIsRendered = false;
  
  // loads lists on startup
- displayMeasures();
  diplaymainUnitList();
+
+ //adds the first dat entry UIs
  addLink();
  addNode();
- // dropdown list of measurments
- function displayMeasures()
- {
-	var select = document.getElementById("measures"); 
-	var options = convert().measures();
-	
-	for(var i = 0; i < options.length; i++) {
-		var opt = options[i];
-		var el = document.createElement("option");
-		el.textContent = opt;
-		el.value = opt;
-		select.appendChild(el);
-	}
- }
  
  //dropdown list for the primary units
  function diplaymainUnitList()
@@ -81,7 +68,7 @@ const convert = require('convert-units');
 }
 
 // takes in measures from the user and changes all unit lists
-function newmeasures()
+function newMeasures()
 {
 	measures =document.getElementById("measures").value;
 	diplaymainUnitList();
@@ -157,6 +144,10 @@ function newLabel(numN)
 function newNodeName(numN)
 {
 	nodeName[numN]=document.getElementById("nodeName"+String(numN)).value;
+	if(!(isNaN(nodeName[numN])))
+	{
+		alert("It is not a good idea to have Node "+numN+"'s name as a number or empty.");
+	}
 	newLabel(numN);
 }
 
@@ -164,6 +155,12 @@ function newNodeName(numN)
 function newNodeValue(numN)
 {
 	nodeValue[numN]=document.getElementById("nodeValue"+String(numN)).value;
+
+	if(isNaN(nodeValue[numN]))
+	{
+		alert("Node "+numN+"'s value needs to be a number.");
+		return;
+	}
 	newLabel(numN);
 	convertNodeUnits(numN);
 }
@@ -273,6 +270,12 @@ function newDest(numL)
 function newLinkVal(numL)
 {
 	linkVal[numL]=document.getElementById("linkVal"+String(numL)).value;
+
+	if(isNaN(linkVal[numL]))
+	{
+		alert("Link "+numL+"'s value needs to be a number.");
+		return;
+	}
 	convertLinkUnits(numL);
 }
 
