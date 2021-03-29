@@ -35,7 +35,7 @@ const convert = require('convert-units');
  // loads lists on startup
  diplaymainUnitList();
 
- //adds the first dat entry UIs
+ //adds the first data entry UIs
  addLink();
  addNode();
  
@@ -143,12 +143,22 @@ function newLabel(numN)
 // sets the node name to user input and remakes node label
 function newNodeName(numN)
 {
-	nodeName[numN]=document.getElementById("nodeName"+String(numN)).value;
-	if(!(isNaN(nodeName[numN])))
+	var name = document.getElementById("nodeName"+String(numN)).value;
+	if(nodeName.includes(name))
 	{
-		alert("It is not a good idea to have Node "+numN+"'s name as a number or empty.");
+		alert("Please make Node "+numN+"'s name different from others.");
 	}
+	nodeName[numN] = name;
 	newLabel(numN);
+
+	for(let i = 1; i < numLink; i++)
+	{
+		if(linkColor[i] != null)
+		{
+			sourceList(i);
+			destList(i);
+		}
+	}
 }
 
 // takes in user input of the node value, remakes node label and coverts the value
@@ -300,6 +310,15 @@ function deleteINode(numN)
 	nodeUnits[numN] = null;
 	nodeColor[numN]=null;
 	conNodeValue[numN]=null;
+
+	for(let i = 1; i < numLink; i++)
+	{
+		if(linkColor[i] != null)
+		{
+			sourceList(i);
+			destList(i);
+		}
+	}
 }
 
 //adds the node UI to the page and sets color and unit default values
@@ -397,11 +416,11 @@ function addLink()
 								"<h3 style='margin-top: 5px'>Link "+numLink+"</h3>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Source #</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newSource("+numLink+")' style='width: 238px' id='source"+String(numLink)+"'>"+
+									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newSource("+numLink+")' style='width: 238px' id='source"+String(numLink)+"'> </select>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Destination #</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newDest("+numLink+")' style='width: 238px' id='dest"+String(numLink)+"'>"+
+									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newDest("+numLink+")' style='width: 238px' id='dest"+String(numLink)+"'> </select>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Value</span>"+
@@ -426,7 +445,61 @@ function addLink()
 	makeLinks.appendChild(newLink);
 	linkColor[numLink] = '#EFECEC';
 	linkUnitList(numLink);
+	sourceList(numLink);
+	destList(numLink);
     numLink++;
+}
+
+//diplays unit list for each link
+function sourceList(numL)
+{
+	var op = document.getElementById("source"+String(numL));
+	var length = op.options.length;
+	for (i = length-1; i >= 0; i--)
+	{
+		op.options[i] = null;
+	}
+
+	var sourceSelect = document.getElementById("source"+String(numL)); 
+	var sourceOptions = nodeName;
+	for(var i = 1; i < sourceOptions.length; i++)
+	{
+		if(nodeColor[i]!=null && nodeName[i]!=null)
+		{
+			var opt = sourceOptions[i];
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			sourceSelect.appendChild(el);
+		}
+	}
+	sourceSelect.value = nodeName[numSource[numL]];
+}
+
+//diplays unit list for each link
+function destList(numL)
+{
+	var op = document.getElementById("dest"+String(numL));
+	var length = op.options.length;
+	for (i = length-1; i >= 0; i--)
+	{
+		op.options[i] = null;
+	}
+
+	var destSelect = document.getElementById("dest"+String(numL)); 
+	var destOptions = nodeName;
+	for(var i = 1; i < destOptions.length; i++)
+	{
+		if(nodeColor[i]!=null && nodeName[i]!=null)
+		{
+			var opt = destOptions[i];
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			destSelect.appendChild(el);
+		}
+	}
+	destSelect.value = nodeName[dest[numL]];
 }
 
 //diplays unit list for each link
@@ -645,8 +718,6 @@ function renderSankey()
 			color: linkColor}
         }]
 		
-
-	
     var layout = {
 		"title": mytitle,
 		paper_bgcolor: color
