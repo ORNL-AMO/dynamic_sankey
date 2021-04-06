@@ -1,6 +1,6 @@
 const convert = require('convert-units');
  var mytitle;
- var measures = 'length';
+ var measures = 'energy';
  var primaryUnit;
  var color = "white";
 
@@ -33,23 +33,11 @@ const convert = require('convert-units');
  var sankeyIsRendered = false;
  
  // loads lists on startup
- displayMeasures();
  diplaymainUnitList();
- 
- // dropdown list of measurments
- function displayMeasures()
- {
-	var select = document.getElementById("measures"); 
-	var options = convert().measures();
-	
-	for(var i = 0; i < options.length; i++) {
-		var opt = options[i];
-		var el = document.createElement("option");
-		el.textContent = opt;
-		el.value = opt;
-		select.appendChild(el);
-	}
- }
+
+ //adds the first data entry UIs
+ addLink();
+ addNode();
  
  //dropdown list for the primary units
  function diplaymainUnitList()
@@ -80,7 +68,7 @@ const convert = require('convert-units');
 }
 
 // takes in measures from the user and changes all unit lists
-function newmeasures()
+function newMeasures()
 {
 	measures =document.getElementById("measures").value;
 	diplaymainUnitList();
@@ -149,20 +137,40 @@ function endColor()
 function newLabel(numN)
 {
 	nodeLabel[numN]=nodeName[numN]+" "+
-	nodeValue[numN]+nodeUnits[numN];
+	nodeValue[numN]+" "+nodeUnits[numN];
 }
 
 // sets the node name to user input and remakes node label
 function newNodeName(numN)
 {
-	nodeName[numN]=document.getElementById("nodeName"+String(numN)).value;
+	var name = document.getElementById("nodeName"+String(numN)).value;
+	if(nodeName.includes(name))
+	{
+		alert("Please make Node "+numN+"'s name different from others.");
+	}
+	nodeName[numN] = name;
 	newLabel(numN);
+
+	for(let i = 1; i < numLink; i++)
+	{
+		if(linkColor[i] != null)
+		{
+			sourceList(i);
+			destList(i);
+		}
+	}
 }
 
 // takes in user input of the node value, remakes node label and coverts the value
 function newNodeValue(numN)
 {
 	nodeValue[numN]=document.getElementById("nodeValue"+String(numN)).value;
+
+	if(isNaN(nodeValue[numN]))
+	{
+		alert("Node "+numN+"'s value needs to be a number.");
+		return;
+	}
 	newLabel(numN);
 	convertNodeUnits(numN);
 }
@@ -241,14 +249,14 @@ function newSource(numL)
 {
 	if(!isNaN(document.getElementById("source"+String(numL)).value))
 	{
-		console.log("true source");
+		//console.log("true source");
 		numSource[numL]=document.getElementById("source"+String(numL)).value;
 	}
 	else
 	{
-		console.log("false source");
+		//console.log("false source");
 		numSource[numL]=String(nodeName.indexOf(document.getElementById("source"+String(numL)).value));
-		console.log(numSource[numL]);
+		//console.log(numSource[numL]);
 	}
 }
 
@@ -257,14 +265,14 @@ function newDest(numL)
 {
 	if(!isNaN(document.getElementById("dest"+String(numL)).value))
 	{
-		console.log("true dest");
+		//console.log("true dest");
 		dest[numL]=document.getElementById("dest"+String(numL)).value;
 	}
 	else
 	{
-		console.log("false dest");
+		//console.log("false dest");
 		dest[numL]=String(nodeName.indexOf(document.getElementById("dest"+String(numL)).value));
-		console.log(dest[numL]);
+		//console.log(dest[numL]);
 	}
 }
 
@@ -272,6 +280,12 @@ function newDest(numL)
 function newLinkVal(numL)
 {
 	linkVal[numL]=document.getElementById("linkVal"+String(numL)).value;
+
+	if(isNaN(linkVal[numL]))
+	{
+		alert("Link "+numL+"'s value needs to be a number.");
+		return;
+	}
 	convertLinkUnits(numL);
 }
 
@@ -296,6 +310,15 @@ function deleteINode(numN)
 	nodeUnits[numN] = null;
 	nodeColor[numN]=null;
 	conNodeValue[numN]=null;
+
+	for(let i = 1; i < numLink; i++)
+	{
+		if(linkColor[i] != null)
+		{
+			sourceList(i);
+			destList(i);
+		}
+	}
 }
 
 //adds the node UI to the page and sets color and unit default values
@@ -303,6 +326,10 @@ function addNode()
 {
     var makeInputs = document.getElementById("makeInputs");
 
+	var xButton = "";
+	if(numNode==1)
+		xButton = "disabled";
+		
 	var newNode = document.createElement("col-md-4");
 	newNode.setAttribute("id", "Node"+numNode);
     newNode.innerHTML = 
@@ -311,7 +338,7 @@ function addNode()
 					"<tbody>"+
 						"<tr id='inputs'>"+
 							"<td style='width:120px' class='text-center'>"+
-								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteINode("+numNode+")' style='background-color: #8f3236'><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
+								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteINode("+numNode+")' style='background-color: #8f3236' "+xButton+"><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
 								"<h3 style='margin-top: 5px'>Node "+numNode+"</h3>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Name</span>"+
@@ -335,6 +362,9 @@ function addNode()
 					"</tbody>"+
 				"</table>"+
 			"</div>";
+	
+	
+	
 	
 	makeInputs.appendChild(newNode);
 	nodeColor[numNode] = '#1E00FF';
@@ -370,6 +400,10 @@ function addLink()
 {
     var makeLinks = document.getElementById("makeLinks");
 
+	var xButton = "";
+	if(numNode==1)
+		xButton = "disabled";
+
 	var newLink = document.createElement("col-md-4");
 	newLink.setAttribute("id", "Link"+numLink);
     newLink.innerHTML =
@@ -378,15 +412,15 @@ function addLink()
 					"<tbody>"+
 						"<tr id='inputs'>"+
 							"<td style='width:120px' class='text-center'>"+
-								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteLink("+numLink+")' style='background-color: #8f3236'><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
+								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteLink("+numLink+")' style='background-color: #8f3236' "+xButton+"><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
 								"<h3 style='margin-top: 5px'>Link "+numLink+"</h3>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Source #</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newSource("+numLink+")' style='width: 238px' id='source"+String(numLink)+"'>"+
+									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newSource("+numLink+")' style='width: 238px' id='source"+String(numLink)+"'> </select>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Destination #</span>"+
-									"<input type='text' class='form-control' aria-describedby='basic-addon1' onchange='newDest("+numLink+")' style='width: 238px' id='dest"+String(numLink)+"'>"+
+									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newDest("+numLink+")' style='width: 238px' id='dest"+String(numLink)+"'> </select>"+
 								"</div>"+
 								"<div class='input-group'>"+
 									"<span class='input-group-addon'>Value</span>"+
@@ -411,7 +445,61 @@ function addLink()
 	makeLinks.appendChild(newLink);
 	linkColor[numLink] = '#EFECEC';
 	linkUnitList(numLink);
+	sourceList(numLink);
+	destList(numLink);
     numLink++;
+}
+
+//diplays unit list for each link
+function sourceList(numL)
+{
+	var op = document.getElementById("source"+String(numL));
+	var length = op.options.length;
+	for (i = length-1; i >= 0; i--)
+	{
+		op.options[i] = null;
+	}
+
+	var sourceSelect = document.getElementById("source"+String(numL)); 
+	var sourceOptions = nodeName;
+	for(var i = 1; i < sourceOptions.length; i++)
+	{
+		if(nodeColor[i]!=null && nodeName[i]!=null)
+		{
+			var opt = sourceOptions[i];
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			sourceSelect.appendChild(el);
+		}
+	}
+	sourceSelect.value = nodeName[numSource[numL]];
+}
+
+//diplays unit list for each link
+function destList(numL)
+{
+	var op = document.getElementById("dest"+String(numL));
+	var length = op.options.length;
+	for (i = length-1; i >= 0; i--)
+	{
+		op.options[i] = null;
+	}
+
+	var destSelect = document.getElementById("dest"+String(numL)); 
+	var destOptions = nodeName;
+	for(var i = 1; i < destOptions.length; i++)
+	{
+		if(nodeColor[i]!=null && nodeName[i]!=null)
+		{
+			var opt = destOptions[i];
+			var el = document.createElement("option");
+			el.textContent = opt;
+			el.value = opt;
+			destSelect.appendChild(el);
+		}
+	}
+	destSelect.value = nodeName[dest[numL]];
 }
 
 //diplays unit list for each link
@@ -496,10 +584,7 @@ function buildSvgArrows()
 			endNodeColor = nodeColor[i+k];
 		}
         const height = rects[i].getAttribute('height');
-		//const defaultY = rects[i].getAttribute('y');
-		//const colorG = rects[i].getAttribute('fill');
-
-        //rects[i].setAttribute('y', `${defaultY}`);
+		
         rects[i].setAttribute('style', `width: ${height*.25}px; height: ${height}px; clip-path:  ${arrowShape}; 
          stroke-width: 0.5; stroke: rgb(255, 255, 255); stroke-opacity: 0.5; fill: ${endNodeColor}; fill-opacity: ${arrowOpacity};`);
       }
@@ -539,6 +624,18 @@ function addGradientElement()
 		}
 	}
   }
+
+  function visableNodeLabels() 
+{
+	const nodeSpot = document.getElementsByClassName('node-label');
+	for (let i = 0; i < nodeSpot.length; i++) 
+	{
+		nodeSpot[i].setAttribute('style', "cursor: default; fill: rgb(68, 68, 68);"+
+		 "text-shadow: rgb(255, 255, 255) -2px 2px 2px,rgb(255, 255, 255) 2px 2px 2px,"+
+		 "rgb(255, 255, 255) 2px -2px 2px, rgb(255, 255, 255) -2px -2px 2px; font-family:"+
+		"'Open Sans', verdana, arial, sans-serif; font-size: 15px; fill-opacity: 1;");
+	}
+}
 
   //downloads the sankey
 function downloadSankey() 
@@ -608,26 +705,24 @@ function renderSankey()
 
     var data = [{
     type: "sankey",
-        //arrangement: "snap",
+        arrangement: "freeform",
 		valuesuffix: primaryUnit,
         node:{
 			label: nodeLabel,
 			color: tempNodeColor,
-           // x: [0.2, 0.2, 0.5, 0.7, 0.3, 0.5],
-           // y: [0.7, 0.5, 0.2, 0.4, 0.2, 0.3],
-            pad:10}, // 10 Pixels
+            pad:45}, 
         link: {
             source: numSource,
             target: dest,
 			value: conLinkValue,
 			color: linkColor}
         }]
-
+		
     var layout = {
 		"title": mytitle,
 		paper_bgcolor: color
 	}
-
+	
 	Plotly.newPlot('myDiv', data, layout)
 
 	if(arrows)
@@ -639,8 +734,18 @@ function renderSankey()
 
 		var myPlot = document.getElementById('myDiv');
 		myPlot.on('plotly_afterplot', function(){
+			visableNodeLabels();
 			addGradientElement();
 		});
 	}
+	else
+	{
+		var myPlot = document.getElementById('myDiv');
+		myPlot.on('plotly_afterplot', function(){
+			visableNodeLabels();
+		});
+	}
+	visableNodeLabels();
+	
 	sankeyIsRendered = true;
 }
