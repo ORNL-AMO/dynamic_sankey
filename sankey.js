@@ -1,4 +1,4 @@
-const convert = require('convert-units');
+const convert = require('./convert-units/lib/index');
  var mytitle;
  var measures = 'energy';
  var primaryUnit;
