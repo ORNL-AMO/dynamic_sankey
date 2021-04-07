@@ -40,6 +40,14 @@ metric = {
       }
     , to_anchor: 0.681818
       }
+    , 'ft/min': {
+        name: {
+            singular: 'Foot per minute',
+            plural: 'Feet per minute',
+            display: '(ft/s)'
+        },
+        to_anchor: 0.0113636
+    }
 };
 
 module.exports = {

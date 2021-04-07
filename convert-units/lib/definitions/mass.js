@@ -4,62 +4,94 @@ var metric
 metric = {
   mcg: {
     name: {
-      singular: 'Microgram'
-    , plural: 'Micrograms'
+        singular: 'Microgram'
+        , plural: 'Micrograms',
+        display: '(mcg)'
     }
-  , to_anchor: 1/1000000
-  }
+    , to_anchor: 1 / 1000000
+}
 , mg: {
     name: {
-      singular: 'Milligram'
-    , plural: 'Milligrams'
+        singular: 'Milligram'
+        , plural: 'Milligrams',
+        display: '(mg)'
     }
-  , to_anchor: 1/1000
-  }
+    , to_anchor: 1 / 1000
+}
 , g: {
     name: {
-      singular: 'Gram'
-    , plural: 'Grams'
+        singular: 'Gram'
+        , plural: 'Grams',
+        display: '(g)'
     }
-  , to_anchor: 1
-  }
+    , to_anchor: 1
+}
 , kg: {
     name: {
-      singular: 'Kilogram'
-    , plural: 'Kilograms'
+        singular: 'Kilogram'
+        , plural: 'Kilograms',
+        display: '(kg)'
     }
-  , to_anchor: 1000
-}
-, mt: {
+    , to_anchor: 1000
+},
+tonne: {
     name: {
-      singular: 'Metric Tonne'
-    , plural: 'Metric Tonnes'
+        singular: 'Tonne'
+        , plural: 'Tonne',
+        display: '(t)'
     }
-  , to_anchor: 1000000
-  }
+    , to_anchor: 1000000
+}
+, u: {
+    name: {
+        singular: 'Atomic Mass Unite'
+        , plural: 'Atomic Mass Unites',
+        display: '(u)'
+    }
+    , to_anchor: 0.000000000166054 / 100000000000000
+}
+, sl: {
+    name: {
+        singular: 'Slug'
+        , plural: 'Slugs',
+        display: '(sl)'
+    }
+    , to_anchor: 14593.9
+}
 };
 
 imperial = {
   oz: {
     name: {
-      singular: 'Ounce'
-    , plural: 'Ounces'
+        singular: 'Ounce'
+        , plural: 'Ounces',
+        display: '(oz)'
     }
-  , to_anchor: 1/16
-  }
+    , to_anchor: 1 / 16
+}
 , lb: {
     name: {
-      singular: 'Pound'
-    , plural: 'Pounds'
+        singular: 'Pound'
+        , plural: 'Pounds',
+        display: '(lb)'
     }
-  , to_anchor: 1
-}, t: {
-  name: {
-    singular: 'Ton',
-    plural: 'Tons',
-  },
-    to_anchor: 2000,
-  },
+    , to_anchor: 1
+},
+klb: {
+    name: {
+        singular: 'Thousand pound'
+        , plural: 'Thousand pounds',
+        display: '(klb)'
+    }
+    , to_anchor: 1000
+}, ton: {
+    name: {
+        singular: 'Imperial Ton'
+        , plural: 'Imperial Ton',
+        display: '()'
+    }
+    , to_anchor: 2240
+}
 };
 
 module.exports = {
