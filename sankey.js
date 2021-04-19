@@ -247,33 +247,13 @@ function newLinkColor(numL)
 //takes in the source node from user input(can be the node number or its name)
 function newSource(numL)
 {
-	if(!isNaN(document.getElementById("source"+String(numL)).value))
-	{
-		//console.log("true source");
-		numSource[numL]=document.getElementById("source"+String(numL)).value;
-	}
-	else
-	{
-		//console.log("false source");
-		numSource[numL]=String(nodeName.indexOf(document.getElementById("source"+String(numL)).value));
-		//console.log(numSource[numL]);
-	}
+	numSource[numL]=String(nodeName.indexOf(document.getElementById("source"+String(numL)).value));
 }
 
 //takes in the destination node from user input(can be the node number or its name)
 function newDest(numL)
 {
-	if(!isNaN(document.getElementById("dest"+String(numL)).value))
-	{
-		//console.log("true dest");
-		dest[numL]=document.getElementById("dest"+String(numL)).value;
-	}
-	else
-	{
-		//console.log("false dest");
-		dest[numL]=String(nodeName.indexOf(document.getElementById("dest"+String(numL)).value));
-		//console.log(dest[numL]);
-	}
+	dest[numL]=String(nodeName.indexOf(document.getElementById("dest"+String(numL)).value));
 }
 
 // takes in user input of the link value and coverts the value
@@ -474,6 +454,7 @@ function sourceList(numL)
 		}
 	}
 	sourceSelect.value = nodeName[numSource[numL]];
+	sourceSelect.onchange();
 }
 
 //diplays unit list for each link
@@ -500,6 +481,7 @@ function destList(numL)
 		}
 	}
 	destSelect.value = nodeName[dest[numL]];
+	destSelect.onchange();
 }
 
 //diplays unit list for each link
@@ -752,7 +734,7 @@ function renderSankey()
 
 function example()
 {
-	document.getElementById("title").value = "Process Energy (TBtu) from https://www.energy.gov";
+	document.getElementById("title").value = "Process Energy (TBtu), 2014 from https://www.energy.gov";
 	document.getElementById("title").onchange();
 	hasArrows(false);
 	removeColorGradient();
@@ -765,7 +747,7 @@ function example()
 	{
 		addNode();
 	}
-	for(i= numLink; i < 23; i++)
+	for(i= numLink; i < 26; i++)
 	{
 		addLink();
 	}
@@ -777,7 +759,7 @@ function example()
 	document.getElementById("nodeColor1").value = "#8cc3ed";
 
 	document.getElementById("nodeName2").value = "Electricity";
-	document.getElementById("nodeValue2").value = "2439";
+	document.getElementById("nodeValue2").value = "2438";
 	document.getElementById("nodeUnits2").value = "Btu";
 	document.getElementById("nodeColor2").value = "#f57067";
 
@@ -829,6 +811,164 @@ function example()
 		document.getElementById("nodeColor"+i).onchange();
 	}
 
+	document.getElementById("source1").value = "Steam";
+	document.getElementById("dest1").value = "Process Heating";
+	document.getElementById("linkVal1").value = "2353";
+	document.getElementById("linkUnits1").value = "Btu";
+	document.getElementById("linkColor1").value = "#8cc3ed";
 
+	document.getElementById("source2").value = "Steam";
+	document.getElementById("dest2").value = "Process Cooling & Refrigeration";
+	document.getElementById("linkVal2").value = "96";
+	document.getElementById("linkUnits2").value = "Btu";
+	document.getElementById("linkColor2").value = "#8cc3ed";
 
+	document.getElementById("source3").value = "Steam";
+	document.getElementById("dest3").value = "Machine Drive";
+	document.getElementById("linkVal3").value = "360";
+	document.getElementById("linkUnits3").value = "Btu";
+	document.getElementById("linkColor3").value = "#8cc3ed";
+
+	document.getElementById("source4").value = "Steam";
+	document.getElementById("dest4").value = "Electro-Chemical";
+	document.getElementById("linkVal4").value = "0";
+	document.getElementById("linkUnits4").value = "Btu";
+	document.getElementById("linkColor4").value = "#8cc3ed";
+
+	document.getElementById("source5").value = "Steam";
+	document.getElementById("dest5").value = "Other Process Uses";
+	document.getElementById("linkVal5").value = "271";
+	document.getElementById("linkUnits5").value = "Btu";
+	document.getElementById("linkColor5").value = "#8cc3ed";
+
+	document.getElementById("source6").value = "Electricity";
+	document.getElementById("dest6").value = "Process Heating";
+	document.getElementById("linkVal6").value = "368";
+	document.getElementById("linkUnits6").value = "Btu";
+	document.getElementById("linkColor6").value = "#f57067";
+
+	document.getElementById("source7").value = "Electricity";
+	document.getElementById("dest7").value = "Process Cooling & Refrigeration";
+	document.getElementById("linkVal7").value = "219";
+	document.getElementById("linkUnits7").value = "Btu";
+	document.getElementById("linkColor7").value = "#f57067";
+
+	document.getElementById("source8").value = "Electricity";
+	document.getElementById("dest8").value = "Machine Drive";
+	document.getElementById("linkVal8").value = "1548";
+	document.getElementById("linkUnits8").value = "Btu";
+	document.getElementById("linkColor8").value = "#f57067";
+
+	document.getElementById("source9").value = "Electricity";
+	document.getElementById("dest9").value = "Electro-Chemical";
+	document.getElementById("linkVal9").value = "234";
+	document.getElementById("linkUnits9").value = "Btu";
+	document.getElementById("linkColor9").value = "#f57067";
+
+	document.getElementById("source10").value = "Electricity";
+	document.getElementById("dest10").value = "Other Process Uses";
+	document.getElementById("linkVal10").value = "69";
+	document.getElementById("linkUnits10").value = "Btu";
+	document.getElementById("linkColor10").value = "#f57067";
+
+	document.getElementById("source11").value = "Fuel";
+	document.getElementById("dest11").value = "Process Heating";
+	document.getElementById("linkVal11").value = "4796";
+	document.getElementById("linkUnits11").value = "Btu";
+	document.getElementById("linkColor11").value = "#f2f551";
+
+	document.getElementById("source12").value = "Fuel";
+	document.getElementById("dest12").value = "Process Cooling & Refrigeration";
+	document.getElementById("linkVal12").value = "31";
+	document.getElementById("linkUnits12").value = "Btu";
+	document.getElementById("linkColor12").value = "#f2f551";
+
+	document.getElementById("source13").value = "Fuel";
+	document.getElementById("dest13").value = "Machine Drive";
+	document.getElementById("linkVal13").value = "214";
+	document.getElementById("linkUnits13").value = "Btu";
+	document.getElementById("linkColor13").value = "#f2f551";
+
+	document.getElementById("source14").value = "Fuel";
+	document.getElementById("dest14").value = "Electro-Chemical";
+	document.getElementById("linkVal14").value = "0";
+	document.getElementById("linkUnits14").value = "Btu";
+	document.getElementById("linkColor14").value = "#f2f551";
+
+	document.getElementById("source15").value = "Fuel";
+	document.getElementById("dest15").value = "Other Process Uses";
+	document.getElementById("linkVal15").value = "262";
+	document.getElementById("linkUnits15").value = "Btu";
+	document.getElementById("linkColor15").value = "#f2f551";
+
+	document.getElementById("source16").value = "Process Heating";
+	document.getElementById("dest16").value = "Applied Energy";
+	document.getElementById("linkVal16").value = "4961";
+	document.getElementById("linkUnits16").value = "Btu";
+	document.getElementById("linkColor16").value = "#a6f288";
+
+	document.getElementById("source17").value = "Process Heating";
+	document.getElementById("dest17").value = "Process End Use Losses";
+	document.getElementById("linkVal17").value = "2556";
+	document.getElementById("linkUnits17").value = "Btu";
+	document.getElementById("linkColor17").value = "#9b85f2";
+
+	document.getElementById("source18").value = "Process Cooling & Refrigeration";
+	document.getElementById("dest18").value = "Applied Energy";
+	document.getElementById("linkVal18").value = "228";
+	document.getElementById("linkUnits18").value = "Btu";
+	document.getElementById("linkColor18").value = "#a6f288";
+
+	document.getElementById("source19").value = "Process Cooling & Refrigeration";
+	document.getElementById("dest19").value = "Process End Use Losses";
+	document.getElementById("linkVal19").value = "118";
+	document.getElementById("linkUnits19").value = "Btu";
+	document.getElementById("linkColor19").value = "#9b85f2";
+
+	document.getElementById("source20").value = "Machine Drive";
+	document.getElementById("dest20").value = "Applied Energy";
+	document.getElementById("linkVal20").value = "753";
+	document.getElementById("linkUnits20").value = "Btu";
+	document.getElementById("linkColor20").value = "#a6f288";
+
+	document.getElementById("source21").value = "Machine Drive";
+	document.getElementById("dest21").value = "Process End Use Losses";
+	document.getElementById("linkVal21").value = "1369";
+	document.getElementById("linkUnits21").value = "Btu";
+	document.getElementById("linkColor21").value = "#9b85f2";
+
+	document.getElementById("source22").value = "Electro-Chemical";
+	document.getElementById("dest22").value = "Applied Energy";
+	document.getElementById("linkVal22").value = "122";
+	document.getElementById("linkUnits22").value = "Btu";
+	document.getElementById("linkColor22").value = "#a6f288";
+
+	document.getElementById("source23").value = "Electro-Chemical";
+	document.getElementById("dest23").value = "Process End Use Losses";
+	document.getElementById("linkVal23").value = "112";
+	document.getElementById("linkUnits23").value = "Btu";
+	document.getElementById("linkColor23").value = "#9b85f2";
+
+	document.getElementById("source24").value = "Other Process Uses";
+	document.getElementById("dest24").value = "Applied Energy";
+	document.getElementById("linkVal24").value = "307";
+	document.getElementById("linkUnits24").value = "Btu";
+	document.getElementById("linkColor24").value = "#a6f288";
+
+	document.getElementById("source25").value = "Other Process Uses";
+	document.getElementById("dest25").value = "Process End Use Losses";
+	document.getElementById("linkVal25").value = "295";
+	document.getElementById("linkUnits25").value = "Btu";
+	document.getElementById("linkColor25").value = "#9b85f2";
+
+	for(i= 1; i < 26; i++)
+	{
+		document.getElementById("source"+i).onchange();
+		document.getElementById("dest"+i).onchange();
+		document.getElementById("linkVal"+i).onchange();
+		document.getElementById("linkUnits"+i).onchange();
+		document.getElementById("linkColor"+i).onchange();
+	}
+
+	renderSankey();
 }
