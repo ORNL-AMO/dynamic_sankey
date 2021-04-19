@@ -12,16 +12,40 @@
 <link rel="stylesheet" href="styles.css"> </link>
 </head>
 
+<style>
+
+     .img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 15em;
+        border-radius: 3%;
+    }
+    
+
+    .footer {
+        text-align: center;
+        padding: 3px;
+        background-color: lightblue;
+        color: white;
+    }
+</style>
+
 <body>
+
 <br>
 	<div class="container3">
 		<button onclick="window.open('help.html')" type="button" class="btn btn-primary">Help Page</button>
 	</div> 
 
+<center>
+<img src="images/ORNL.png" style="width:300px;height:155px; margin-bottom: 0em">
+</center>
+
 	<h1><center>Dynamic Sankey Tool</center></h1>
 	<div class="container">
 		<div class="form-group">
-			<label for="title">Enter the Title Of Your Sankey</label>
+			<label for="title">Enter the Title of Your Sankey</label>
 			<input type="text" class="form-control" id="title" onchange="newTitle()">
 		</div>
 	</div>
@@ -30,7 +54,7 @@
 		<h3>Background Color</h3>
 		<input type='color' class='inp' id='colorPicker' onchange = "chartColor()" value='#FFFFFF' style="width: 145px">
 
-		<h3>Type Of Sankey</h3>
+		<h3>Type of Sankey</h3>
 		<div class="btn-group">
 			<button type="button" class="btn btn-primary" onclick="hasArrows(false)">Nodes</button>
 			<button type="button" class="btn btn-primary" onclick="hasArrows(true)">Arrows</button>
@@ -77,19 +101,19 @@
 			<option value="each">Each</option>
 		</select>
 
-		<h3>primary Units</h3>
+		<h3>Primary Units</h3>
 		<select class="input-group" name="unitOptions" id="unitOptions" onchange = "newPrimaryUnit()">
 		</select>
 		
-		<h3>Add Sources And Destinations</h3> 
+		<h3>Add Sources and Destinations</h3> 
 		<div style="width: 120px;  display: inline-block;">
 			<table class="table table-bordered" style="margin: 0px;">
 				<tbody>
 					<tr >
 						<td style="width:120px" class="text-center">
-							<h3 style="margin-top: 5px">Source And Destination Nodes</h3>
+							<h3 style="margin-top: 5px">Source and Destination Nodes</h3>
 							<div class="text-center" >
-								<button class="btn btn-secondary btn-pop" onclick="addNode()" >Add Source Or Destination</button>
+								<button class="btn btn-secondary btn-pop" onclick="addNode()" >Add Source or Destination</button>
 							</div>
 						</td>
 					</tr>
@@ -102,15 +126,15 @@
 		</div>
 		
 		
-		<h3>Define Your Source To Destination Flow</h3>
+		<h3>Define Your Source to Destination Flow</h3>
 		<div style="width: 120px;  display: inline-block;">
 			<table class="table table-bordered" style="margin: 0px;">
 				<tbody>
 					<tr>
 						<td style="width:120px" class="text-center">
-							<h3 style="margin-top: 5px">Source And Destination Flow</h3>
+							<h3 style="margin-top: 5px">Source and Destination Flow</h3>
 							<div class="text-center">
-								<button class="btn btn-secondary btn-pop" onclick="addLink()" >Add Source And Destination Link</button>
+								<button class="btn btn-secondary btn-pop" onclick="addLink()" >Add Source and Destination Link</button>
 							</div>
 						</td>
 					</tr>
@@ -134,5 +158,29 @@
 	<div id='myDiv' style="width:100%;height:750px;"></div>
 	<script src='sankey.js'></script>
 	<script src="node_modules/save-svg-as-png/lib/saveSvgAsPng.js"></script>
+
+
+    <center>
+    <div class="footerBorder"></div>
+    <div class="footer">
+        <div class="jh-card row">
+            <div class="col-8">
+                <p class="help">
+                    <a routerLink="/technical-assistance/faq">FAQ</a> |
+                    <a routerLink="/contact-us">Contact Us</a>
+                </p>
+                <p>Oak Ridge National Laboratory is managed by UT-Battelle LLC for the US Department of Energy</p>
+                <a href="https://www.ornl.gov/ornl/contact-us/Security--Privacy-Notice">Security & Privacy Notice</a> |
+                <a href="mailto:accawigk@ornl.gov?subject=Dynamic&nbsp;Sankey&nbsp;Tool:&nbsp;Issues">Contact Site Administrator</a> |
+                <a href="https://www.ornl.gov/content/accessibility">Accessibility/508</a> |
+                <a href="https://www.ornl.gov/content/notice-nondiscrimination-and-accessibility-requirements">Nondiscrimination/1557</a>
+            </div>
+            <div class="col-4">
+                <img class="img doe" alt="Department Of Energy Logo" src="images/doe-science-white.svg">
+                <img class="img utbat" alt="UT-Battelle Logo" src="images/ut-battelle.png">
+            </div>
+        </div>
+    </div>
+	<center>
 </body>
 </html>

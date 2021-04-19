@@ -353,7 +353,7 @@ function addNode()
 									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newNodeUnit("+numNode+")' style='width: 200px' id='nodeUnits"+String(numNode)+"'></select>"+
 								"</div>"+
 								"<div class='input-group'>"+
-									"<span class='input-group-addon' id='basic-addon1'>converted Units</span>"+
+									"<span class='input-group-addon' id='basic-addon1'>Converted Units</span>"+
 									"<input type='text' class='form-control' aria-describedby='basic-addon1' style='width: 200px' id='convertedNodeUnits"+String(numNode)+ "' readonly='true'>"+
 								"</div>"+
 									"<input type='color' class='inp' id='nodeColor"+numNode+"' onchange = 'newNodeColor("+numNode+")' value='#1E00FF' style='width: 200px'>"+
@@ -415,11 +415,11 @@ function addLink()
 								"<DIV align='right'> <button class='btn btn-secondary' onclick='deleteLink("+numLink+")' style='background-color: #8f3236' "+xButton+"><span class='glyphicon glyphicon-remove'></span></button></DIV>" +
 								"<h3 style='margin-top: 5px'>Link "+numLink+"</h3>"+
 								"<div class='input-group'>"+
-									"<span class='input-group-addon'>Source #</span>"+
+									"<span class='input-group-addon'>Source</span>"+
 									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newSource("+numLink+")' style='width: 238px' id='source"+String(numLink)+"'> </select>"+
 								"</div>"+
 								"<div class='input-group'>"+
-									"<span class='input-group-addon'>Destination #</span>"+
+									"<span class='input-group-addon'>Destination</span>"+
 									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newDest("+numLink+")' style='width: 238px' id='dest"+String(numLink)+"'> </select>"+
 								"</div>"+
 								"<div class='input-group'>"+
@@ -431,7 +431,7 @@ function addLink()
 									"<select type='text' class='form-control' aria-describedby='basic-addon1' onchange='newLinkUnit("+numLink+")' style='width: 238px' id='linkUnits"+String(numLink)+"'></select>"+
 								"</div>"+
 								"<div class='input-group'>"+
-									"<span class='input-group-addon' id='basic-addon1'>converted Units</span>"+
+									"<span class='input-group-addon' id='basic-addon1'>Converted Units</span>"+
 									"<input type='text' class='form-control' aria-describedby='basic-addon1' style='width: 238px' id='convertedLinkUnits"+String(numLink)+ "' readonly='true'>"+
 								"</div>"+
 								"<input type='color' class='inp' id='linkColor"+numLink+"' onchange = 'newLinkColor("+numLink+")' value='#EFECEC' style='width: 238px'>"+
