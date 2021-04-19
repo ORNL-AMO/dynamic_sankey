@@ -749,3 +749,86 @@ function renderSankey()
 	
 	sankeyIsRendered = true;
 }
+
+function example()
+{
+	document.getElementById("title").value = "Process Energy (TBtu) from https://www.energy.gov";
+	document.getElementById("title").onchange();
+	hasArrows(false);
+	removeColorGradient();
+	document.getElementById("measures").value = "energy";
+	document.getElementById("measures").onchange();
+	document.getElementById("unitOptions").value = "Btu";
+	document.getElementById("unitOptions").onchange();
+
+	for(i= numNode; i < 11; i++)
+	{
+		addNode();
+	}
+	for(i= numLink; i < 23; i++)
+	{
+		addLink();
+	}
+
+
+	document.getElementById("nodeName1").value = "Steam";
+	document.getElementById("nodeValue1").value = "3080";
+	document.getElementById("nodeUnits1").value = "Btu";
+	document.getElementById("nodeColor1").value = "#8cc3ed";
+
+	document.getElementById("nodeName2").value = "Electricity";
+	document.getElementById("nodeValue2").value = "2439";
+	document.getElementById("nodeUnits2").value = "Btu";
+	document.getElementById("nodeColor2").value = "#f57067";
+
+	document.getElementById("nodeName3").value = "Fuel";
+	document.getElementById("nodeValue3").value = "5303";
+	document.getElementById("nodeUnits3").value = "Btu";
+	document.getElementById("nodeColor3").value = "#f2f551";
+
+	document.getElementById("nodeName4").value = "Process Heating";
+	document.getElementById("nodeValue4").value = "7517";
+	document.getElementById("nodeUnits4").value = "Btu";
+	document.getElementById("nodeColor4").value = "#fffffc";
+
+	document.getElementById("nodeName5").value = "Process Cooling & Refrigeration";
+	document.getElementById("nodeValue5").value = "346";
+	document.getElementById("nodeUnits5").value = "Btu";
+	document.getElementById("nodeColor5").value = "#fffffc";
+
+	document.getElementById("nodeName6").value = "Machine Drive";
+	document.getElementById("nodeValue6").value = "2122";
+	document.getElementById("nodeUnits6").value = "Btu";
+	document.getElementById("nodeColor6").value = "#fffffc";
+
+	document.getElementById("nodeName7").value = "Electro-Chemical";
+	document.getElementById("nodeValue7").value = "234";
+	document.getElementById("nodeUnits7").value = "Btu";
+	document.getElementById("nodeColor7").value = "#fffffc";
+
+	document.getElementById("nodeName8").value = "Other Process Uses";
+	document.getElementById("nodeValue8").value = "602";
+	document.getElementById("nodeUnits8").value = "Btu";
+	document.getElementById("nodeColor8").value = "#fffffc";
+
+	document.getElementById("nodeName9").value = "Applied Energy";
+	document.getElementById("nodeValue9").value = "6371";
+	document.getElementById("nodeUnits9").value = "Btu";
+	document.getElementById("nodeColor9").value = "#a6f288";
+
+	document.getElementById("nodeName10").value = "Process End Use Losses";
+	document.getElementById("nodeValue10").value = "4450";
+	document.getElementById("nodeUnits10").value = "Btu";
+	document.getElementById("nodeColor10").value = "#9b85f2";
+	
+	for(i =1; i<11; i++)
+	{
+		document.getElementById("nodeName"+i).onchange();
+		document.getElementById("nodeValue"+i).onchange();
+		document.getElementById("nodeUnits"+i).onchange();
+		document.getElementById("nodeColor"+i).onchange();
+	}
+
+
+
+}
