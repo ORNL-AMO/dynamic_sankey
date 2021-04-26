@@ -278,6 +278,7 @@ function deleteLink(numL)
 	linkVal[numL]=null;
 	linkColor[numL]=null;
 	conLinkValue[numL]=null;
+	document.getElementById("example").disabled = true;
 }
 
 //deletes the link UI from the page and clears the elements of the parallel link arrays
@@ -299,6 +300,7 @@ function deleteINode(numN)
 			destList(i);
 		}
 	}
+	document.getElementById("example").disabled = true;
 }
 
 //adds the node UI to the page and sets color and unit default values
@@ -739,6 +741,22 @@ function renderSankey()
 	sankeyIsRendered = true;
 }
 
+//displats credits
+function credits()
+{
+	var credit ="CREDITS\n\n"+
+	"Product Owner and Mentor: "+
+	"Gina Accawi\n\n"+
+	"TEAM MEMBERS:\n"+
+	"Joel Watlington: Iteration Manager\n"+
+	"Rebekah Brandt: Developer/Tester\n"+
+	"Evan Kelley: Developer/Tester\n"+
+	"Christopher Lewis: Developer/Tester\n"+
+	"Shataydrian Marshall: Developer/Tester\n"+
+	"Noah Wilmore: Developer/Tester";
+	alert(credit);
+}
+
 //Generates the example sankey 
 function example()
 {
@@ -985,4 +1003,5 @@ function example()
 
 	//render example sankey
 	renderSankey();
+	document.getElementById("example").disabled = true;
 }

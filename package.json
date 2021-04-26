@@ -1,7 +1,7 @@
 {
   "name": "Dynamic-Sankey-App",
   "version": "0.1.0",
-  "author": "your name",
+  "author": " ORNL-AMO",
   "description": "Dynamic Sankey App",
   "main": "main.js",
   "scripts": {
@@ -16,5 +16,5 @@
     "electron-rebuild": "^2.3.5"
   },
   "keywords": [],
-  "license": "ISC"
+  "license": "dynamic_sankey"
 }
