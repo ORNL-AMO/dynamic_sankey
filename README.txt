@@ -18,8 +18,12 @@ HOW TO RUN:
 -Install node js
 https://nodejs.org/en/download/
 
+version 14.16.1 or later
+
 -Install npm by writing in terminal:
 npm install -g npm
+
+version 6.14.8 or higher
 
 -You can check that you have both installed by typing into the terminal:
 node -v
