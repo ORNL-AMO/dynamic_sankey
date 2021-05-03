@@ -25,7 +25,11 @@ div.container3 {
 .active, .collapsible:hover {
   background-color: LightBlue;
 }
-
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block
+}
 .content {
   position: relative;
   right: 625px;
