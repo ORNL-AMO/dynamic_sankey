@@ -5,7 +5,8 @@
   "description": "Dynamic Sankey App",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder --win"
   },
   "dependencies": {
     "convert-units": "^2.3.4",
@@ -13,7 +14,25 @@
   },
   "devDependencies": {
     "electron": "^11.3.0",
+    "electron-builder": "^22.14.13",
     "electron-rebuild": "^2.3.5"
+  },
+  "build": {
+    "appId": "gov.ornl.amo.dynamic-sankey",
+    "productName": "Dynamic Sankey App",
+    "files": [
+      "**/*",
+      "!node_modules/.cache/**",
+      "!dist/**"
+    ],
+    "win": {
+      "target": "nsis",
+      "sign": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "keywords": [],
   "license": "dynamic_sankey"
