@@ -1,2 +1,12 @@
 node_modules
 dist
+__MACOSX/
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+*.DS_Store
+*.AppleDouble
+*.LSOverride
+._*
