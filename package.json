@@ -13,8 +13,8 @@
     "save-svg-as-png": "^1.4.17"
   },
   "devDependencies": {
-    "electron": "^11.3.0",
-    "electron-builder": "^22.14.13",
+    "electron": "^11.5.0",
+    "electron-builder": "^26.8.1",
     "electron-rebuild": "^2.3.5"
   },
   "build": {
@@ -27,7 +27,7 @@
     ],
     "win": {
       "target": "nsis",
-      "sign": false
+      "signAndEditExecutable": false
     },
     "nsis": {
       "oneClick": false,
